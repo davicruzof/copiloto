@@ -7,7 +7,7 @@
     /* Completeness */
     "skipLibCheck": true,
     "baseUrl": "./src",
-    "typeRoots": ["declarations.d.ts"]                              /* Skip type checking all .d.ts files. */
+    "typeRoots": ["declarations.d.ts","styled.d.ts"]                              /* Skip type checking all .d.ts files. */
   },
   "exclude": ["node_modules", "babel.config.js"]
 }

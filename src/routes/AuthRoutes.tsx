@@ -10,6 +10,7 @@ import FullServices from "../screens/FullServices";
 import { Empty } from "../screens/Empty";
 import { Profile } from "../screens/Profile";
 import { Map } from "../screens/MapView";
+import Budget from "../screens/Budget";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -34,7 +35,7 @@ export const User = () => {
     >
       <Tab.Screen name="home" component={Home} />
       <Tab.Screen name="calendar" component={Empty} />
-      <Tab.Screen name="calculator" component={Empty} />
+      <Tab.Screen name="calculator" component={Budget} />
       <Tab.Screen name="user" component={Profile} />
     </Tab.Navigator>
   );

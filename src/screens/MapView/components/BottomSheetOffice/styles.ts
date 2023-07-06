@@ -25,8 +25,12 @@ export const HeaderInfoContainer = styled.View`
   flex-direction: row;
 `;
 
-export const Title = styled.Text`
+export const Title = styled.Text.attrs({
+  numberOfLines: 1,
+})`
   font-size: 20px;
+  max-width: 85%;
+  text-overflow: clip;
   font-family: Jost_600SemiBold;
 `;
 

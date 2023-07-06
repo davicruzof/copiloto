@@ -1,19 +1,24 @@
-import React, { useContext, useMemo, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import React, { useContext } from "react";
+import { Alert, ScrollView, Text, View } from "react-native";
 
 import { CardList } from "../CardList";
 import { ButtonNext } from "../../../../shared/components/ButtonNext";
 import { ButtonLigthDanger } from "../../../../shared/components/ButtonLigthDanger";
 import { CardService } from "../CardService";
 import { OrcamentoContext } from "../../../../contexts/orcamento";
+import { data } from "../../../MapView/util";
 import { useNavigation } from "@react-navigation/native";
 
-export const OrcamentoSection = () => {
+export const OrcamentoSection = ({
+  setTabActive,
+  setTypeBottomSheet,
+  setListLocations,
+}: any) => {
   const navigation = useNavigation<any>();
-
   const { orcamento, setOrcamento } = useContext(OrcamentoContext);
 
   const toggleBottomNavigationView = () => {
+    setListLocations(data);
     setOrcamento(null);
   };
 
@@ -22,7 +27,8 @@ export const OrcamentoSection = () => {
   const selectedValues = `Solicitar orçamento(${orcamentoSize}/3)`;
 
   const addNewService = () => {
-    navigation.navigate("MapView", { typeBottomSheet: "add" });
+    setTabActive();
+    setTypeBottomSheet("add");
   };
 
   const emptyService = (value: number) => {
@@ -55,6 +61,13 @@ export const OrcamentoSection = () => {
     });
   };
 
+  const sendNewOrcamento = () => {
+    if (orcamentoSize > 0) {
+      Alert.alert("Copiloto", "Orcamento solicitado");
+      navigation.navigate("home");
+    }
+  };
+
   return (
     <View
       style={{
@@ -80,23 +93,25 @@ export const OrcamentoSection = () => {
         <View style={{ marginBottom: 32 }}>
           {orcamento
             ? orcamentoSize > 0 &&
-              orcamento.map(
-                (item: any, index: React.Key | null | undefined) => {
-                  return (
-                    <CardList
-                      disabled
-                      key={index}
-                      data={item}
-                      handlePress={() => {}}
-                    />
-                  );
-                }
-              )
+              orcamento.map((item: any, index: any) => {
+                return (
+                  <CardList
+                    disabled
+                    key={index}
+                    data={item}
+                    handlePress={() => {}}
+                  />
+                );
+              })
             : emptyService(3)}
           {orcamentoSize > 0 && emptyService(3 - orcamentoSize)}
         </View>
 
-        <ButtonNext text={selectedValues} disable={false} />
+        <ButtonNext
+          onPress={sendNewOrcamento}
+          text={selectedValues}
+          disable={orcamentoSize === 0}
+        />
         <ButtonLigthDanger
           text="Desfazer"
           onPress={toggleBottomNavigationView}

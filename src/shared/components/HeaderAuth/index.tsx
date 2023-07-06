@@ -4,15 +4,17 @@ import icon from "../../../assets/arrow.png";
 import { Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
-const HeaderAuth = ({ handlePressHeader, title }) => {
+const HeaderAuth = ({ handlePressHeader, title }: any) => {
   return (
     <>
       <StatusBar style="dark" translucent={false} backgroundColor="#FFFf" />
 
       <Container>
-        <ButtonBack onPress={handlePressHeader}>
-          <Image source={icon} />
-        </ButtonBack>
+        {handlePressHeader && (
+          <ButtonBack onPress={handlePressHeader}>
+            <Image source={icon} />
+          </ButtonBack>
+        )}
         <Title>{title}</Title>
       </Container>
     </>

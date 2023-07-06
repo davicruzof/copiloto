@@ -1,30 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native";
 
 import HeaderAuth from "../../shared/components/HeaderAuth";
 import { Tabs } from "./components/Tabs";
 import { MapSection } from "./components/MapSection";
 import { OrcamentoSection } from "./components/OrcamentoSection";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { Spinner } from "../../shared/components/Spinner";
+import { useNavigation } from "@react-navigation/native";
+import { data } from "./util";
 
 export function Map() {
   const navigation = useNavigation<any>();
-  const { params } = useRoute() as {
-    params?: { section: string; typeBottomSheet: string };
-  };
 
-  const typeBottomSheet = params?.typeBottomSheet
-    ? params?.typeBottomSheet
-    : "empty";
-
-  const tabActively = params?.section ? params.section : "map";
-
+  const [listLocations, setListLocations] = useState(data);
   const [tabActive, setTabActive] = useState("map");
-
-  useEffect(() => {
-    setTabActive(tabActively);
-  }, [tabActively]);
+  const [typeBottomSheet, setTypeBottomSheet] = useState("orcamento");
 
   return (
     <SafeAreaView style={{ backgroundColor: "#fff" }}>
@@ -35,9 +24,22 @@ export function Map() {
 
       <Tabs active={tabActive} setActive={setTabActive} />
 
-      {tabActive === "map" && <MapSection typeBottomSheet={typeBottomSheet} />}
+      {tabActive === "map" && (
+        <MapSection
+          typeBottomSheet={typeBottomSheet}
+          listLocations={listLocations}
+          setListLocations={setListLocations}
+          setTabActive={() => setTabActive("orcamento")}
+        />
+      )}
 
-      {tabActive === "orcamento" && <OrcamentoSection />}
+      {tabActive === "orcamento" && (
+        <OrcamentoSection
+          setTabActive={() => setTabActive("map")}
+          setTypeBottomSheet={setTypeBottomSheet}
+          setListLocations={setListLocations}
+        />
+      )}
     </SafeAreaView>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 
 import * as S from "./styles";
 
@@ -10,19 +10,34 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { ButtonNext } from "../../../../shared/components/ButtonNext";
-import { useNavigation } from "@react-navigation/native";
 import { OrcamentoContext } from "../../../../contexts/orcamento";
+import { useNavigation } from "@react-navigation/native";
 
-export const BottomSheetOffice = ({ visible, setVisible, data, type }: any) => {
-  const { bottom } = useSafeAreaInsets();
+export const BottomSheetOffice = ({
+  visible,
+  setVisible,
+  data,
+  type,
+  setListLocations,
+  listLocations,
+  setTabActive,
+}: any) => {
   const navigation = useNavigation<any>();
+  const { bottom } = useSafeAreaInsets();
 
   const { setOrcamento } = useContext(OrcamentoContext);
 
   const handleAddService = () => {
-    setOrcamento((old) => (old !== null ? [...old, data] : [data]));
-    navigation.navigate("MapView", { section: "orcamento" });
+    const newArray = listLocations.filter((item: any) => item.id !== data.id);
+    setListLocations(newArray);
+    setOrcamento((old: any) => (old !== null ? [...old, data] : [data]));
+    setTabActive();
     setVisible();
+  };
+
+  const sendNewOrcamento = () => {
+    Alert.alert("Copiloto", "Orcamento solicitado");
+    navigation.navigate("home");
   };
 
   return (
@@ -65,10 +80,15 @@ export const BottomSheetOffice = ({ visible, setVisible, data, type }: any) => {
         <S.DividerLine />
         <ButtonNext
           text={type === "add" ? "Incluir para orçamento" : "Agendar agora"}
-          onPress={handleAddService}
+          onPress={type === "add" ? handleAddService : sendNewOrcamento}
           disable={false}
         />
-        {type !== "add" && <ButtonLigthNext text="Solicitar orçamento" />}
+        {type !== "add" && (
+          <ButtonLigthNext
+            text="Solicitar orçamento"
+            onPress={handleAddService}
+          />
+        )}
         <ButtonLigthDanger text="fechar" onPress={setVisible} />
       </S.Container>
     </BottomSheet>

@@ -20,12 +20,14 @@ export const Container = styled.TouchableOpacity.attrs({
   padding: 16px;
   min-height: 86px;
   border-radius: 13px;
+  margin-bottom: 16px;
 `;
 
 export const HeaderInfoContainer = styled.View`
   width: ${Dimensions.get("screen").width - 150}px;
   justify-content: space-between;
   flex-direction: row;
+  align-items: center;
 `;
 
 export const Value = styled.Text`
@@ -33,8 +35,12 @@ export const Value = styled.Text`
   font-family: Jost_600SemiBold;
 `;
 
-export const Title = styled.Text`
+export const Title = styled.Text.attrs({
+  numberOfLines: 1,
+})`
   font-size: 20px;
+  max-width: 70%;
+  text-overflow: clip;
   font-family: Jost_600SemiBold;
 `;
 
@@ -46,6 +52,7 @@ export const InfoContainer = styled.View`
 
 export const TextInfo = styled.Text`
   font-size: 14px;
+  margin-left: 4px;
   font-family: Jost_400Regular;
 `;
 

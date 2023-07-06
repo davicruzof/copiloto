@@ -1,25 +1,25 @@
+import * as Location from "expo-location";
+import { Region } from "react-native-maps";
 import React, { useEffect, useState } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, View, ScrollView } from "react-native";
+
 import { BottomSheetOffice } from "../BottomSheetOffice";
-import { FlatList } from "react-native";
 import { CardList } from "../CardList";
 import MapView, { Marker } from "react-native-maps";
 import { MarkerPoint } from "../MarkerPoint";
 import SwitchView from "../SwitchView";
 
-import * as Location from "expo-location";
-
-import { Region } from "react-native-maps";
 import { Spinner } from "../../../../shared/components/Spinner";
 
 const { height, width } = Dimensions.get("screen");
 
 export const MapSection = ({
   typeBottomSheet,
-}: {
-  typeBottomSheet: string;
-}) => {
-  const [viewActive, setViewActive] = useState("map");
+  listLocations,
+  setListLocations,
+  setTabActive,
+}: any) => {
+  const [viewActive, setViewActive] = useState("list");
   const [visible, setVisible] = useState(false);
   const [mapPermission, setMapPermission] = useState(false);
   const [bottomSheetValue, setBottomSheetValue] = useState({});
@@ -49,25 +49,6 @@ export const MapSection = ({
       }
     })();
   }, []);
-
-  const data = [
-    {
-      title: "Oficina Lima",
-      value: "120,00",
-      distance: 15.2,
-      isHouse: true,
-      id: "22",
-      rating: "4,3",
-    },
-    {
-      title: "Oficina Lima 2",
-      value: "145,00",
-      distance: 12.5,
-      isHouse: false,
-      id: "23",
-      rating: "2,9",
-    },
-  ];
 
   if (coordenantes === null) {
     return <View />;
@@ -99,18 +80,21 @@ export const MapSection = ({
             loadingEnabled
             loadingIndicatorColor="#2C94F4"
             style={{ height: height - 120, width, zIndex: -1 }}
-            region={{
-              latitude: coordenantes.latitude,
-              longitude: coordenantes.longitude,
+            initialRegion={{
+              latitude: listLocations[0].latitude,
+              longitude: listLocations[0].longitude,
               latitudeDelta: 0.006,
               longitudeDelta: 0.006,
             }}
-            scrollEnabled={false}
+            scrollEnabled
           >
-            {data.map((item, index) => (
+            {listLocations.map((item: any, index: any) => (
               <Marker
                 key={index}
-                coordinate={coordenantes}
+                coordinate={{
+                  latitude: item.latitude,
+                  longitude: item.longitude,
+                }}
                 onPress={() => toggleBottomNavigationView(item)}
               >
                 <MarkerPoint value={item.value} />
@@ -122,21 +106,24 @@ export const MapSection = ({
         <View
           style={{
             paddingHorizontal: 20,
-            backgroundColor: "rgba(134,197,255,0.1)",
-            height: "100%",
             paddingTop: 100,
+            backgroundColor: "rgba(134,197,255,0.1)",
           }}
         >
-          <FlatList
-            data={data}
-            renderItem={({ item }) => (
+          <ScrollView
+            style={{
+              marginBottom: 270,
+            }}
+            showsVerticalScrollIndicator={false}
+          >
+            {listLocations.map((item: any) => (
               <CardList
                 data={item}
+                key={item.id}
                 handlePress={() => toggleBottomNavigationView(item)}
               />
-            )}
-            keyExtractor={(item) => item.id}
-          />
+            ))}
+          </ScrollView>
         </View>
       )}
 
@@ -145,20 +132,10 @@ export const MapSection = ({
         visible={visible}
         data={bottomSheetValue}
         setVisible={toggleBottomNavigationView}
+        setListLocations={setListLocations}
+        listLocations={listLocations}
+        setTabActive={setTabActive}
       />
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-    height: 600,
-    width: 400,
-    justifyContent: "flex-end",
-    alignItems: "center",
-  },
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-});
