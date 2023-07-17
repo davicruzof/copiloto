@@ -7,10 +7,11 @@ import Home from "../screens/Home";
 import SearchHome from "../screens/SearchHome";
 import RecommendationService from "../screens/RecommendationService";
 import FullServices from "../screens/FullServices";
-import { Empty } from "../screens/Empty";
 import { Profile } from "../screens/Profile";
 import { Map } from "../screens/MapView";
 import Budget from "../screens/Budget";
+import { BudgetDetails } from "../screens/BudgetDetails";
+import Schedules from "../screens/Schedules";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -18,7 +19,7 @@ const Stack = createNativeStackNavigator();
 export const User = () => {
   return (
     <Tab.Navigator
-      initialRouteName="home"
+      initialRouteName="calendar"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) => {
           return <AntDesign name={route.name as any} size={31} color={color} />;
@@ -34,7 +35,7 @@ export const User = () => {
       })}
     >
       <Tab.Screen name="home" component={Home} />
-      <Tab.Screen name="calendar" component={Empty} />
+      <Tab.Screen name="calendar" component={Schedules} />
       <Tab.Screen name="calculator" component={Budget} />
       <Tab.Screen name="user" component={Profile} />
     </Tab.Navigator>
@@ -56,6 +57,7 @@ export function AuthRoutes() {
       <Stack.Screen name="SearchHome" component={SearchHome} />
       <Stack.Screen name="FullServices" component={FullServices} />
       <Stack.Screen name="MapView" component={Map} />
+      <Stack.Screen name="BudgetDetails" component={BudgetDetails} />
       <Stack.Screen
         name="RecommendationService"
         component={RecommendationService}

@@ -5,6 +5,7 @@ import {
   Jost_500Medium,
   Jost_600SemiBold,
   Jost_700Bold,
+  Jost_300Light,
 } from "@expo-google-fonts/jost";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -18,6 +19,7 @@ import { OrcamentoContextProvider } from "./src/contexts/orcamento";
 
 export default function App() {
   const [fontLoading] = useFonts({
+    Jost_300Light,
     Jost_400Regular,
     Jost_500Medium,
     Jost_700Bold,

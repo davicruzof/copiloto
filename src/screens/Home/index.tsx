@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { getListCategory } from "../../services/user/user";
 import { CategoryResponse, ServiceResponse } from "../../services/user/types";
-import { Alert, ScrollView } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import { Spinner } from "../../shared/components/Spinner";
 import { UserContext } from "../../contexts/userContext";
 
@@ -27,10 +27,10 @@ const Home = () => {
       queryKey: ["todos"],
       queryFn: getListCategory,
       onSuccess: ({ data }) => {
-        if (data.length > 0) {
+        if (data && data.length > 0) {
           setCategoryList(data);
           activeItem(data[0]);
-          const serviceAux = [];
+          const serviceAux: React.SetStateAction<ServiceResponse[]> = [];
           data.map(
             (item) => item?.services && serviceAux.push(...item.services)
           );
@@ -38,11 +38,11 @@ const Home = () => {
         }
       },
       onError: () => {
-        Alert.alert(
-          "Copiloto",
-          "Desculpe, estamos com problemas. Tente novamente mais tarde.",
-          [{ text: "Tentar novamente", onPress: () => refetchCategorias() }]
-        );
+        // Alert.alert(
+        //   "Copiloto",
+        //   "Desculpe, estamos com problemas. Tente novamente mais tarde.",
+        //   [{ text: "Tentar novamente", onPress: () => refetchCategorias() }]
+        // );
       },
     });
 
@@ -57,6 +57,15 @@ const Home = () => {
 
   if (isLoadingGetListCategory) {
     return <Spinner />;
+  }
+
+  if (
+    services.length === 0 ||
+    !user ||
+    categoryList.length === 0 ||
+    servicesList.length === 0
+  ) {
+    return <View />;
   }
 
   return (

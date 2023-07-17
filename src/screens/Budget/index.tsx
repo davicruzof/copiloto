@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import * as S from "./styles";
 import HeaderAuth from "../../shared/components/HeaderAuth";
@@ -7,13 +7,115 @@ import { Image } from "react-native";
 import icon from "../../assets/settings.png";
 import { ScrollView } from "react-native";
 
+const DATAACCPEPT = [
+  {
+    proposta: "120,00",
+    data: "20/02/2020",
+    status: "accept",
+    name: "Oficina Lima",
+    servicos: [
+      {
+        servico: "Troca do filtro de ar",
+        proposta: "220,00",
+      },
+      {
+        servico: "Troca de pastilhas de freio",
+        proposta: "310,00",
+      },
+    ],
+  },
+  {
+    proposta: "110,00",
+    data: "21/02/2020",
+    status: "accept",
+    name: "Oficina Soares",
+    servicos: [
+      {
+        servico: "Troca de óleo",
+        proposta: "120,00",
+      },
+    ],
+  },
+  {
+    proposta: "140,00",
+    data: "19/02/2020",
+    status: "accept",
+    name: "Oficina Zé",
+    servicos: [
+      {
+        servico: "Troca de pneus",
+        proposta: "310,00",
+      },
+    ],
+  },
+];
+
+const DATA = [
+  {
+    proposta: "120,00",
+    data: "23/03/2020",
+    status: "progress",
+    name: "Car Clean",
+    servicos: [
+      {
+        servico: "Troca de óleo",
+        proposta: "120,00",
+      },
+      {
+        servico: "Troca de pneus",
+        proposta: "310,00",
+      },
+    ],
+  },
+  {
+    proposta: "110,00",
+    data: "21/02/2020",
+    status: "pedding",
+    name: "Carros Seguros",
+    servicos: [
+      {
+        servico: "Alinhamento",
+        proposta: "80,00",
+      },
+      {
+        servico: "Troca de óleo",
+        proposta: "90,00",
+      },
+    ],
+  },
+  {
+    proposta: "140,00",
+    data: "19/02/2020",
+    status: "pedding",
+    name: "Carro conserto",
+    servicos: [
+      {
+        servico: "Troca de óleo",
+        proposta: "120,00",
+      },
+      {
+        servico: "Troca de pneus",
+        proposta: "310,00",
+      },
+    ],
+  },
+];
+
 const Budget = () => {
+  const [filterAccept, setFilterAccept] = useState(false);
+
+  const data = filterAccept ? DATAACCPEPT : DATA;
   return (
     <S.Container>
-      <HeaderAuth title="Orcamentos" />
+      <HeaderAuth title="Meus Orcamentos" />
 
       <S.Wrapper>
-        <S.Button active>
+        <S.Button
+          active={filterAccept}
+          onPress={() => {
+            setFilterAccept(!filterAccept);
+          }}
+        >
           <Image source={icon} />
           <S.ButtonText>Orçamentos aceitos</S.ButtonText>
         </S.Button>
@@ -23,30 +125,10 @@ const Budget = () => {
           showsVerticalScrollIndicator={false}
           style={{ marginBottom: 160 }}
         >
-          <CardBudget
-            proposta="120,00"
-            data="20/02/2020"
-            status="Proposta pendente de aprovação"
-            name="Oficina Lima"
-          />
-          <CardBudget
-            proposta="120,00"
-            data="20/02/2020"
-            status="sem proposta"
-            name="Oficina Zé"
-          />
-          <CardBudget
-            proposta="120,00"
-            data="20/02/2020"
-            status="Proposta pendente de aprovação"
-            name="Oficina Lima"
-          />
-          <CardBudget
-            proposta="120,00"
-            data="20/02/2020"
-            status="sem proposta"
-            name="Oficina Zé"
-          />
+          {data.length > 0 &&
+            data.map((item) => {
+              return <CardBudget budget={item} />;
+            })}
         </ScrollView>
       </S.Wrapper>
     </S.Container>

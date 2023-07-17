@@ -10,6 +10,8 @@ export const Container = styled.TouchableOpacity`
   justify-content: center;
   border-radius: ${(props: { theme: DefaultTheme }) =>
     props.theme.spacing.xxsmall}px;
+
+  ${(props: any) => props.isBorder && `border: 1px solid #2C94F4;`}
 `;
 
 export const TextButton = styled.Text`
