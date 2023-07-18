@@ -42,7 +42,7 @@ export function BudgetDetails() {
             }}
           />
           <S.WrapperHeader>
-            <S.TitleHeader>{data.name}</S.TitleHeader>
+            <S.TitleHeader>{data.title}</S.TitleHeader>
             <S.InfoContainer>
               <FontAwesome5 name="map-marker-alt" size={16} color="#2C94F4" />
               <S.TextInfo>10m distante</S.TextInfo>

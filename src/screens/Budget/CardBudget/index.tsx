@@ -25,14 +25,14 @@ export function CardBudget({ budget }: any) {
       <S.Header onPress={() => detailsBudget(budget)}>
         <S.WrapperHeader>
           <S.Image />
-          <S.HeaderTitle>{budget.name}</S.HeaderTitle>
+          <S.HeaderTitle>{budget.title}</S.HeaderTitle>
         </S.WrapperHeader>
         <Image source={icon} />
       </S.Header>
       <S.Line />
       <S.Wrapper>
         <S.ItemLabel>Proposta</S.ItemLabel>
-        <S.Value>R$ {budget.proposta}</S.Value>
+        <S.Value>R$ {budget.value}</S.Value>
       </S.Wrapper>
       <S.Line></S.Line>
       <S.Wrapper>

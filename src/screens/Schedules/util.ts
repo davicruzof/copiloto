@@ -3,6 +3,7 @@ export const data = [
     title: "Marques Pneus",
     value: "120,00",
     id: "21",
+    status: "accept",
     date: "2023-07-26",
     servicos: [
       {
@@ -19,6 +20,7 @@ export const data = [
     title: "R&L Auto Center",
     value: "99,00",
     id: "22",
+    status: "accept",
     date: "2023-07-28",
     servicos: [
       {
@@ -35,6 +37,7 @@ export const data = [
     title: "Centro Automativo Helth Car",
     value: "125,00",
     id: "23",
+    status: "accept",
     date: "2023-08-02",
     servicos: [
       {
@@ -47,6 +50,7 @@ export const data = [
     title: "E torq oficina",
     value: "100,00",
     id: "24",
+    status: "accept",
     date: "2023-07-29",
     servicos: [
       {
@@ -63,6 +67,7 @@ export const data = [
     title: "Auto10 Oficina Mecânica",
     value: "89,98",
     id: "25",
+    status: "accept",
     date: "2023-08-15",
     servicos: [
       {
@@ -79,6 +84,7 @@ export const data = [
     title: "Drive Select centro automotivo",
     value: "159,65",
     id: "26",
+    status: "accept",
     date: "2023-08-09",
     servicos: [
       {
@@ -91,6 +97,7 @@ export const data = [
     title: "Auto Mecânica do Pica Pau",
     value: "111,11",
     id: "27",
+    status: "accept",
     date: "2023-09-05",
     servicos: [
       {
@@ -103,6 +110,7 @@ export const data = [
     title: "Malta centro automotivo",
     value: "103,39",
     id: "28",
+    status: "accept",
     date: "2023-08-30",
     servicos: [
       {

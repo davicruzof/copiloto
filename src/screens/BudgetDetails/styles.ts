@@ -1,4 +1,7 @@
+import { Dimensions } from "react-native";
 import styled from "styled-components/native";
+
+const { height } = Dimensions.get("screen");
 
 export const Container = styled.View``;
 
@@ -36,6 +39,7 @@ export const TitleHeader = styled.Text`
   color: #333;
   font-family: Jost_600SemiBold;
   font-size: 20px;
+  width: ${height * 0.3}px;
 `;
 
 export const TextInfo = styled.Text`

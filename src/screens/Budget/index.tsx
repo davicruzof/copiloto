@@ -9,10 +9,10 @@ import { ScrollView } from "react-native";
 
 const DATAACCPEPT = [
   {
-    proposta: "120,00",
+    value: "120,00",
     data: "20/02/2020",
     status: "accept",
-    name: "Oficina Lima",
+    title: "Oficina Lima",
     servicos: [
       {
         servico: "Troca do filtro de ar",
@@ -25,10 +25,10 @@ const DATAACCPEPT = [
     ],
   },
   {
-    proposta: "110,00",
+    value: "110,00",
     data: "21/02/2020",
     status: "accept",
-    name: "Oficina Soares",
+    title: "Oficina Soares",
     servicos: [
       {
         servico: "Troca de óleo",
@@ -37,10 +37,10 @@ const DATAACCPEPT = [
     ],
   },
   {
-    proposta: "140,00",
+    value: "140,00",
     data: "19/02/2020",
     status: "accept",
-    name: "Oficina Zé",
+    title: "Oficina Zé",
     servicos: [
       {
         servico: "Troca de pneus",
@@ -52,10 +52,10 @@ const DATAACCPEPT = [
 
 const DATA = [
   {
-    proposta: "120,00",
+    value: "120,00",
     data: "23/03/2020",
     status: "progress",
-    name: "Car Clean",
+    title: "Car Clean",
     servicos: [
       {
         servico: "Troca de óleo",
@@ -68,10 +68,10 @@ const DATA = [
     ],
   },
   {
-    proposta: "110,00",
+    value: "110,00",
     data: "21/02/2020",
     status: "pedding",
-    name: "Carros Seguros",
+    title: "Carros Seguros",
     servicos: [
       {
         servico: "Alinhamento",
@@ -84,10 +84,10 @@ const DATA = [
     ],
   },
   {
-    proposta: "140,00",
+    value: "140,00",
     data: "19/02/2020",
     status: "pedding",
-    name: "Carro conserto",
+    title: "Carro conserto",
     servicos: [
       {
         servico: "Troca de óleo",
