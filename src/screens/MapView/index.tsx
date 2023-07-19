@@ -18,7 +18,7 @@ export function Map() {
   return (
     <SafeAreaView style={{ backgroundColor: "#fff" }}>
       <HeaderAuth
-        handlePressHeader={() => navigation.navigate("home")}
+        handlePressHeader={() => navigation.goBack()}
         title="Buscar"
       />
 

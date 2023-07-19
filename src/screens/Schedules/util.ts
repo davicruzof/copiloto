@@ -1,7 +1,7 @@
 export const data = [
   {
     title: "Marques Pneus",
-    value: "120,00",
+    value: "530,00",
     id: "21",
     status: "accept",
     date: "2023-07-26",
@@ -18,24 +18,24 @@ export const data = [
   },
   {
     title: "R&L Auto Center",
-    value: "99,00",
+    value: "500,00",
     id: "22",
     status: "accept",
     date: "2023-07-28",
     servicos: [
       {
         servico: "Troca do filtro de ar",
-        proposta: "220,00",
+        proposta: "200,00",
       },
       {
         servico: "Troca de pastilhas de freio",
-        proposta: "310,00",
+        proposta: "300,00",
       },
     ],
   },
   {
     title: "Centro Automativo Helth Car",
-    value: "125,00",
+    value: "120,00",
     id: "23",
     status: "accept",
     date: "2023-08-02",
@@ -48,31 +48,31 @@ export const data = [
   },
   {
     title: "E torq oficina",
-    value: "100,00",
+    value: "400,00",
     id: "24",
     status: "accept",
     date: "2023-07-29",
     servicos: [
       {
         servico: "Troca do filtro de ar",
-        proposta: "220,00",
+        proposta: "120,00",
       },
       {
         servico: "Troca de pastilhas de freio",
-        proposta: "310,00",
+        proposta: "280,00",
       },
     ],
   },
   {
     title: "Auto10 Oficina Mecânica",
-    value: "89,98",
+    value: "330,00",
     id: "25",
     status: "accept",
     date: "2023-08-15",
     servicos: [
       {
         servico: "Troca do filtro de ar",
-        proposta: "220,00",
+        proposta: "20,00",
       },
       {
         servico: "Troca de pastilhas de freio",
@@ -89,13 +89,13 @@ export const data = [
     servicos: [
       {
         servico: "Troca de óleo",
-        proposta: "120,00",
+        proposta: "159,65",
       },
     ],
   },
   {
     title: "Auto Mecânica do Pica Pau",
-    value: "111,11",
+    value: "310,00",
     id: "27",
     status: "accept",
     date: "2023-09-05",
@@ -115,7 +115,7 @@ export const data = [
     servicos: [
       {
         servico: "Troca de pneus",
-        proposta: "310,00",
+        proposta: "103,39",
       },
     ],
   },

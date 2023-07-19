@@ -10,8 +10,6 @@ export const BottomSheet = ({ visible, setVisible, data }: any) => {
     <BottomSheetBase visible={visible} onBackButtonPress={setVisible}>
       <S.Header>
         <AgendaItem data={data} setVisible={setVisible} />
-        <AgendaItem data={data} setVisible={setVisible} />
-        <AgendaItem data={data} setVisible={setVisible} />
       </S.Header>
       <ButtonLigthDanger text="fechar" onPress={setVisible} />
     </BottomSheetBase>

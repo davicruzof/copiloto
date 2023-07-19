@@ -63,6 +63,7 @@ export const OrcamentoSection = ({
 
   const sendNewOrcamento = () => {
     if (orcamentoSize > 0) {
+      setOrcamento(null);
       Alert.alert("Copiloto", "Orcamento solicitado");
       navigation.navigate("home");
     }

@@ -50,17 +50,21 @@ const FullServices = () => {
   });
 
   const activeItem = (item: CategoryResponse) => {
-    Alert.alert(
-      "Copiloto",
-      "Deseja realmente mudar de categoria? Todos as suas seleções serão desfeitas",
-      [
-        {
-          text: "Cancelar",
-          style: "cancel",
-        },
-        { text: "Confirmar", onPress: () => handleChangeCategory(item) },
-      ]
-    );
+    if (listSelections.length > 0) {
+      Alert.alert(
+        "Copiloto",
+        "Deseja realmente mudar de categoria? Todos as suas seleções serão desfeitas",
+        [
+          {
+            text: "Cancelar",
+            style: "cancel",
+          },
+          { text: "Confirmar", onPress: () => handleChangeCategory(item) },
+        ]
+      );
+    } else {
+      handleChangeCategory(item);
+    }
   };
 
   const handleChangeCategory = (item: CategoryResponse) => {

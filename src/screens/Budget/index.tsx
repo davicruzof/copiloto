@@ -126,8 +126,8 @@ const Budget = () => {
           style={{ marginBottom: 160 }}
         >
           {data.length > 0 &&
-            data.map((item) => {
-              return <CardBudget budget={item} />;
+            data.map((item, index) => {
+              return <CardBudget key={index} budget={item} />;
             })}
         </ScrollView>
       </S.Wrapper>
