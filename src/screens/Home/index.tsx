@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { Suspense, useContext, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
@@ -69,80 +69,82 @@ const Home = () => {
   }
 
   return (
-    <S.Container>
-      <StatusBar style="dark" translucent={false} backgroundColor="#FDFDFD" />
-      <S.Wrapper>
-        <S.Username>Olá {user.nome.split(" ")[0]} 👋</S.Username>
-        <S.Settings>O que você precisa fazer hoje?</S.Settings>
-        <S.Search onPress={handleSearch}>
-          <S.IconSearch />
-          <S.SearchText>Busque por serviços</S.SearchText>
-        </S.Search>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <S.WrapperList>
-              {categoryList.length > 0 &&
-                categoryList.map((item) => {
-                  const isActive = ativo === item.nome;
-                  return (
-                    <S.CardContainer
-                      key={item.nome}
-                      onPress={() => activeItem(item)}
-                    >
-                      <S.CardContainerIcon isActive={isActive}>
-                        <S.CardIcon
-                          onLoadEnd={() => setLoadingImages(false)}
-                          source={{
-                            uri: isActive ? item.icon_white : item.icon_gray,
-                          }}
-                        />
-                        {loadingImages && <Spinner />}
-                      </S.CardContainerIcon>
-                      <S.TitleCardCategoria isActive={isActive}>
-                        {item.nome}
-                      </S.TitleCardCategoria>
-                    </S.CardContainer>
-                  );
-                })}
-            </S.WrapperList>
-          </ScrollView>
+    <Suspense fallback={<Spinner />}>
+      <S.Container>
+        <StatusBar style="dark" translucent={false} backgroundColor="#FDFDFD" />
+        <S.Wrapper>
+          <S.Username>Olá {user.nome.split(" ")[0]} 👋</S.Username>
+          <S.Settings>O que você precisa fazer hoje?</S.Settings>
+          <S.Search onPress={handleSearch}>
+            <S.IconSearch />
+            <S.SearchText>Busque por serviços</S.SearchText>
+          </S.Search>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <S.WrapperList>
+                {categoryList.length > 0 &&
+                  categoryList.map((item) => {
+                    const isActive = ativo === item.nome;
+                    return (
+                      <S.CardContainer
+                        key={item.nome}
+                        onPress={() => activeItem(item)}
+                      >
+                        <S.CardContainerIcon isActive={isActive}>
+                          <S.CardIcon
+                            onLoadEnd={() => setLoadingImages(false)}
+                            source={{
+                              uri: isActive ? item.icon_white : item.icon_gray,
+                            }}
+                          />
+                          {loadingImages && <Spinner />}
+                        </S.CardContainerIcon>
+                        <S.TitleCardCategoria isActive={isActive}>
+                          {item.nome}
+                        </S.TitleCardCategoria>
+                      </S.CardContainer>
+                    );
+                  })}
+              </S.WrapperList>
+            </ScrollView>
 
-          <S.WrapperListServices>
-            {services.length > 0 &&
-              services.map((item, index) => {
-                return index < 4 ? (
-                  index === 3 ? (
-                    <S.Service
-                      key={item.nome}
-                      onPress={() =>
-                        navigation.navigate("FullServices", {
-                          services,
-                          categoryList,
-                        })
-                      }
-                    >
-                      <S.ServiceTitle>Ver todas as opções</S.ServiceTitle>
-                    </S.Service>
-                  ) : (
-                    <S.Service
-                      key={item.nome}
-                      onPress={() =>
-                        navigation.navigate("FullServices", {
-                          services,
-                          categoryList,
-                          selectItem: item,
-                        })
-                      }
-                    >
-                      <S.ServiceTitle>{item.nome}</S.ServiceTitle>
-                    </S.Service>
-                  )
-                ) : null;
-              })}
-          </S.WrapperListServices>
-        </ScrollView>
-      </S.Wrapper>
-    </S.Container>
+            <S.WrapperListServices>
+              {services.length > 0 &&
+                services.map((item, index) => {
+                  return index < 4 ? (
+                    index === 3 ? (
+                      <S.Service
+                        key={item.nome}
+                        onPress={() =>
+                          navigation.navigate("FullServices", {
+                            services,
+                            categoryList,
+                          })
+                        }
+                      >
+                        <S.ServiceTitle>Ver todas as opções</S.ServiceTitle>
+                      </S.Service>
+                    ) : (
+                      <S.Service
+                        key={item.nome}
+                        onPress={() =>
+                          navigation.navigate("FullServices", {
+                            services,
+                            categoryList,
+                            selectItem: item,
+                          })
+                        }
+                      >
+                        <S.ServiceTitle>{item.nome}</S.ServiceTitle>
+                      </S.Service>
+                    )
+                  ) : null;
+                })}
+            </S.WrapperListServices>
+          </ScrollView>
+        </S.Wrapper>
+      </S.Container>
+    </Suspense>
   );
 };
 

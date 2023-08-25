@@ -19,7 +19,7 @@ const Stack = createNativeStackNavigator();
 export const User = () => {
   return (
     <Tab.Navigator
-      initialRouteName="calendar"
+      initialRouteName="home"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) => {
           return <AntDesign name={route.name as any} size={31} color={color} />;

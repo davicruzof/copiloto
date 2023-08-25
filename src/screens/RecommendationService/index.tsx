@@ -9,6 +9,7 @@ import HeaderAuth from "../../shared/components/HeaderAuth";
 import { ScrollView } from "react-native";
 import { ButtonNext } from "../../shared/components/ButtonNext";
 import { ButtonNextWhite } from "../../shared/components/ButtonNextWhite";
+import { ServicesCompany } from "../../services/company/types";
 import RecommendationServiceModal from "./modal";
 
 const RecommendationService = () => {
@@ -19,15 +20,16 @@ const RecommendationService = () => {
   });
   const [modalVisible, setModalVisible] = useState(false);
   const route = useRoute();
-  const { recommendServices } = route.params as {
+  const { recommendServices, services } = route.params as {
     recommendServices: ServiceRecommendResponse[];
+    services: ServicesCompany[];
   };
 
   const [listSelections, setListSelections] = useState([]);
 
   const handleSelectService = (service: ServiceRecommendResponse) => {
     if (listSelections.includes(service.nome)) {
-      const auxServices = [];
+      const auxServices: React.SetStateAction<never[]> = [];
       listSelections.map((item) => {
         item !== service.nome && auxServices.push(item);
       });
@@ -46,7 +48,7 @@ const RecommendationService = () => {
   };
 
   const handleNextScreen = async () => {
-    navigation.navigate("MapView");
+    navigation.navigate("MapView", { services });
   };
 
   useEffect(() => {

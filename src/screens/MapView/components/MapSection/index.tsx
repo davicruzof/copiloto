@@ -1,7 +1,6 @@
 import * as Location from "expo-location";
-import { Region } from "react-native-maps";
-import React, { useEffect, useState } from "react";
-import { Dimensions, View, ScrollView } from "react-native";
+import React, { useEffect } from "react";
+import { Dimensions, View } from "react-native";
 
 import { BottomSheetOffice } from "../BottomSheetOffice";
 import { CardList } from "../CardList";
@@ -10,6 +9,8 @@ import { MarkerPoint } from "../MarkerPoint";
 import SwitchView from "../SwitchView";
 
 import { Spinner } from "../../../../shared/components/Spinner";
+import * as S from "./styles";
+import MapSectionViewModel from "./MapSection.viewModel";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -19,20 +20,19 @@ export const MapSection = ({
   setListLocations,
   setTabActive,
 }: any) => {
-  const [viewActive, setViewActive] = useState("list");
-  const [visible, setVisible] = useState(false);
-  const [mapPermission, setMapPermission] = useState(false);
-  const [bottomSheetValue, setBottomSheetValue] = useState({});
-  const [loadingMap, setLoadingMap] = useState(true);
-
-  const [coordenantes, setCoordenantes] = useState<
-    Location.LocationObjectCoords | null | Region
-  >(null);
-
-  const toggleBottomNavigationView = (dataValue: any) => {
-    setVisible(!visible);
-    setBottomSheetValue(dataValue);
-  };
+  const {
+    viewActive,
+    setViewActive,
+    visible,
+    mapPermission,
+    setMapPermission,
+    bottomSheetValue,
+    loadingMap,
+    setLoadingMap,
+    coordenantes,
+    setCoordenantes,
+    toggleBottomNavigationView,
+  } = MapSectionViewModel();
 
   useEffect(() => {
     (async () => {
@@ -103,19 +103,8 @@ export const MapSection = ({
           </MapView>
         )
       ) : (
-        <View
-          style={{
-            paddingHorizontal: 20,
-            paddingTop: 100,
-            backgroundColor: "rgba(134,197,255,0.1)",
-          }}
-        >
-          <ScrollView
-            style={{
-              marginBottom: 270,
-            }}
-            showsVerticalScrollIndicator={false}
-          >
+        <S.Container>
+          <S.List showsVerticalScrollIndicator={false}>
             {listLocations.map((item: any) => (
               <CardList
                 data={item}
@@ -123,8 +112,8 @@ export const MapSection = ({
                 handlePress={() => toggleBottomNavigationView(item)}
               />
             ))}
-          </ScrollView>
-        </View>
+          </S.List>
+        </S.Container>
       )}
 
       <BottomSheetOffice

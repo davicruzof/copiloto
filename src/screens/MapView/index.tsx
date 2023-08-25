@@ -5,13 +5,20 @@ import HeaderAuth from "../../shared/components/HeaderAuth";
 import { Tabs } from "./components/Tabs";
 import { MapSection } from "./components/MapSection";
 import { OrcamentoSection } from "./components/OrcamentoSection";
-import { useNavigation } from "@react-navigation/native";
-import { data } from "./util";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { ServicesCompany } from "../../services/company/types";
 
 export function Map() {
   const navigation = useNavigation<any>();
 
-  const [listLocations, setListLocations] = useState(data);
+  const route = useRoute();
+
+  const { services } = route.params as {
+    services: ServicesCompany[];
+  };
+
+  const [listLocations, setListLocations] =
+    useState<ServicesCompany[]>(services);
   const [tabActive, setTabActive] = useState("map");
   const [typeBottomSheet, setTypeBottomSheet] = useState("orcamento");
 

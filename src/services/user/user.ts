@@ -14,7 +14,7 @@ export const getListCategory = async (): Promise<CategoryResponseList> => {
 };
 
 export const getServicesRecommended = async (
-  credentials
+  credentials: Array<string>
 ): Promise<ServiceRecommendResponseList> => {
   try {
     const { data } = await api.post("/user/servicerecommendation", {

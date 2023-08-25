@@ -28,7 +28,7 @@ export const CardList = ({ data, handlePress, ...rest }: any) => {
             <FontAwesome5 name="map-marker-alt" size={16} color="#2C94F4" />
             <S.TextInfo>{data.distance} metros distante</S.TextInfo>
           </S.InfoContainer>
-          {data.isHouse && (
+          {Boolean(data.isHouse) && (
             <S.InfoContainer>
               <AntDesign name="home" size={16} color="black" />
             </S.InfoContainer>

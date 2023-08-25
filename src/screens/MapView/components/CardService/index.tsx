@@ -8,7 +8,15 @@ import * as S from "./styles";
 
 import icon from "../../../../assets/arrow2.png";
 
-export const CardService = ({ text, isActive, handlePress }) => {
+export const CardService = ({
+  text,
+  isActive,
+  handlePress,
+}: {
+  text: string;
+  isActive: boolean;
+  handlePress: () => void;
+}) => {
   const iconStatus = isActive ? iconActive : iconDisabled;
   return (
     <S.Container onPress={handlePress}>

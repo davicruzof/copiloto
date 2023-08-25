@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
-import { Alert, ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 
 import { CardList } from "../CardList";
 import { ButtonNext } from "../../../../shared/components/ButtonNext";
 import { ButtonLigthDanger } from "../../../../shared/components/ButtonLigthDanger";
 import { CardService } from "../CardService";
 import { OrcamentoContext } from "../../../../contexts/orcamento";
-import { data } from "../../../MapView/util";
 import { useNavigation } from "@react-navigation/native";
+import * as S from "./styles";
 
 export const OrcamentoSection = ({
   setTabActive,
@@ -70,26 +70,11 @@ export const OrcamentoSection = ({
   };
 
   return (
-    <View
-      style={{
-        paddingHorizontal: 20,
-        backgroundColor: "rgba(134,197,255,0.1)",
-        paddingTop: 26,
-        height: "100%",
-      }}
-    >
+    <S.Container>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Text
-          style={{
-            color: "#002547",
-            fontFamily: "Jost_500Medium",
-            fontSize: 14,
-            textAlign: "center",
-            marginBottom: 22,
-          }}
-        >
+        <S.Title>
           Você pode escolher até 3 oficinas diferentes para cotação online!
-        </Text>
+        </S.Title>
 
         <View style={{ marginBottom: 32 }}>
           {orcamento
@@ -118,6 +103,6 @@ export const OrcamentoSection = ({
           onPress={toggleBottomNavigationView}
         />
       </ScrollView>
-    </View>
+    </S.Container>
   );
 };

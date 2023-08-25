@@ -68,7 +68,7 @@ export const BottomSheetOffice = ({
                 <FontAwesome5 name="map-marker-alt" size={16} color="#2C94F4" />
                 <S.TextInfo>{data?.distance}m distante</S.TextInfo>
               </S.InfoContainer>
-              {data?.isHouse && (
+              {Boolean(data.isHouse) && (
                 <S.InfoContainer>
                   <AntDesign name="home" size={16} color="black" />
                   <S.TextInfo>Atende a domicílio</S.TextInfo>

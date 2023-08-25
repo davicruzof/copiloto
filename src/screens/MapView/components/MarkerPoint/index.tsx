@@ -2,7 +2,7 @@ import React from "react";
 
 import * as S from "./styles";
 
-export const MarkerPoint = ({ value }) => {
+export const MarkerPoint = ({ value }: { value: string }) => {
   return (
     <S.Button>
       <S.TextContainer>

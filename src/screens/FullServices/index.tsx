@@ -13,6 +13,8 @@ import { getServicesRecommended } from "../../services/user/user";
 import { ButtonNext } from "../../shared/components/ButtonNext";
 import HeaderAuth from "../../shared/components/HeaderAuth";
 import { Spinner } from "../../shared/components/Spinner";
+import { getCompanyServices } from "../../services/company/company";
+import { ServicesCompany } from "../../services/company/types";
 import { ServiceWithCheckboxFullService } from "../../shared/components/ServiceWithCheckboxFullService";
 
 const FullServices = () => {
@@ -23,12 +25,28 @@ const FullServices = () => {
     categoryList: CategoryResponse[];
   };
 
-  const [listSelections, setListSelections] = useState<any>([]);
+  const [listSelections, setListSelections] = useState<Array<string>>([]);
   const navigation = useNavigation<any>();
   const [ativo, setAtivo] = useState("");
   const [services, setServices] = useState<ServiceResponse[]>([]);
+  const [servicesCompany, setServicesCompany] = useState<ServicesCompany[]>([]);
   const [loadingImages, setLoadingImages] = useState(true);
 
+  const { mutate: mutateGetServicesCompany } = useMutation({
+    mutationFn: (servicesIds: string[]) => getCompanyServices(servicesIds),
+    onSuccess: (data: ServicesCompany[]) => {
+      if (data.length > 0) {
+        setServicesCompany(data);
+        mutateGetServicesRecommended(listSelections);
+      }
+    },
+    onError: () => {
+      Alert.alert(
+        "Copiloto",
+        "Desculpe, estamos com problemas. Tente novamente mais tarde."
+      );
+    },
+  });
   const { mutate: mutateGetServicesRecommended } = useMutation({
     mutationFn: (servicesIds: string[]) => getServicesRecommended(servicesIds),
     onSuccess: (data: ServiceRecommendResponseList) => {
@@ -36,9 +54,10 @@ const FullServices = () => {
       if (recommend && recommend.length > 0) {
         navigation.navigate("RecommendationService", {
           recommendServices: recommend,
+          services: servicesCompany,
         });
       } else {
-        navigation.navigate("MapView");
+        navigation.navigate("MapView", { services: servicesCompany });
       }
     },
     onError: () => {
@@ -74,7 +93,8 @@ const FullServices = () => {
   };
 
   const handleRecommendation = () => {
-    mutateGetServicesRecommended(listSelections);
+    mutateGetServicesCompany(listSelections);
+    // mutateGetServicesRecommended(listSelections);
   };
 
   useEffect(() => {
