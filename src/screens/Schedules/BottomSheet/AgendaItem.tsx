@@ -15,8 +15,8 @@ const AgendaItem = ({ data, setVisible }: any) => {
     <S.ScheduleItem onPress={() => detailsBudget(data)}>
       <S.Wrapper>
         <S.Title>{data.title}</S.Title>
-        {data.servicos.map((item: any) => (
-          <S.Services key={item.id}>{item.servico}</S.Services>
+        {data.servicos.map((item: any, index: any) => (
+          <S.Services key={index}>{item.servico}</S.Services>
         ))}
       </S.Wrapper>
       <S.Value>R$: {data.value}</S.Value>

@@ -32,6 +32,7 @@ export const Title = styled.Text.attrs({
   max-width: 85%;
   text-overflow: clip;
   font-family: Jost_600SemiBold;
+  color: #002547;
 `;
 
 export const InfoContainer = styled.View`
@@ -43,6 +44,7 @@ export const InfoContainer = styled.View`
 export const TextInfo = styled.Text`
   font-size: 14px;
   font-family: Jost_400Regular;
+  color: #002547;
 `;
 
 export const LocationContainer = styled.View`

@@ -1,8 +1,16 @@
 export function isEightChars(text: string) {
+  if (text.length === 0) {
+    return false;
+  }
+
   return text.length >= 8;
 }
 
 export function isUpperCase(text: string) {
+  if (text.length === 0) {
+    return false;
+  }
+
   for (let c of text) {
     if (isUpperChar(c)) {
       return true;
@@ -12,26 +20,17 @@ export function isUpperCase(text: string) {
 }
 
 export function isCharSpecial(text: string) {
-  for (let c of text) {
-    if (isUpperCase(c) || isLowerChar(c) || isDigit(c)) {
-      return false;
-    }
+  if (text.length === 0) {
+    return false;
   }
 
-  return true;
+  const regex = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/;
+  return regex.test(text);
 }
 
 function isUpperChar(str: string) {
   return str.length === 1 && str.match(/[A-Z]/);
 }
 
-function isLowerChar(str: string) {
-  return str.length === 1 && str.match(/[a-z]/);
-}
-
-function isDigit(str: string) {
-  return str.length === 1 && str.match(/[0-9]/i);
-}
-
 export const validPassword = (password: string) =>
-  isEightChars(password) && isCharSpecial(password) && isCharSpecial(password);
+  isEightChars(password) && isUpperCase(password) && isCharSpecial(password);

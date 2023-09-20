@@ -18,8 +18,6 @@ export const BottomSheetOffice = ({
   setVisible,
   data,
   type,
-  setListLocations,
-  listLocations,
   setTabActive,
 }: any) => {
   const navigation = useNavigation<any>();
@@ -28,8 +26,6 @@ export const BottomSheetOffice = ({
   const { setOrcamento } = useContext(OrcamentoContext);
 
   const handleAddService = () => {
-    const newArray = listLocations.filter((item: any) => item.id !== data.id);
-    setListLocations(newArray);
     setOrcamento((old: any) => (old !== null ? [...old, data] : [data]));
     setTabActive();
     setVisible();

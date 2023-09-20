@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 export const Container = styled.SafeAreaView.attrs({
   flex: 1,
 })`
-  background-color: #fff;
+  background-color: #e1eaf1;
 `;
 
 export const Wrapper = styled.TouchableOpacity`

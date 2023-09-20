@@ -1,8 +1,14 @@
+import { KeyboardAvoidingView } from "react-native";
 import styled from "styled-components/native";
 
 export const Container = styled.SafeAreaView.attrs({
   flex: 1,
-})`
+})``;
+
+export const Wrapper = styled.View`
+  padding: 16px;
+  flex: 1;
+  justify-content: space-between;
   background-color: #e1eaf1;
 `;
 
@@ -12,7 +18,6 @@ export const Title = styled.Text`
   display: flex;
   align-items: center;
   color: #000000;
-  margin-bottom: 50px;
 `;
 
 export const ContainerInfos = styled.View`

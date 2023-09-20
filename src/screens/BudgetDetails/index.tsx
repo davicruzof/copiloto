@@ -7,6 +7,7 @@ import { Ionicons, FontAwesome5, AntDesign } from "@expo/vector-icons";
 import { Button } from "../../shared/components/Button";
 import { ButtonLigth } from "../../shared/components/ButtonLigth";
 import { TimeLine } from "./TimeLine";
+import { Fragment } from "react";
 
 export function BudgetDetails() {
   const navigation = useNavigation();
@@ -68,15 +69,15 @@ export function BudgetDetails() {
           {data.servicos && data.servicos.length > 0 && (
             <>
               <S.Title>Serviços</S.Title>
-              {data.servicos.map((item: any) => {
+              {data.servicos.map((item: any, index: any) => {
                 return (
-                  <>
+                  <Fragment key={index}>
                     <S.Line />
                     <S.WrapperService>
                       <S.ItemLabel>{item.servico}</S.ItemLabel>
                       <S.Value>R$ {item.proposta}</S.Value>
                     </S.WrapperService>
-                  </>
+                  </Fragment>
                 );
               })}
             </>

@@ -1,128 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { Alert, ScrollView } from "react-native";
+import React from "react";
+import { ScrollView } from "react-native";
 
 import * as S from "./styles";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import {
-  CategoryResponse,
-  ServiceRecommendResponseList,
-  ServiceResponse,
-} from "../../services/user/types";
-import { useMutation } from "@tanstack/react-query";
-import { getServicesRecommended } from "../../services/user/user";
 import { ButtonNext } from "../../shared/components/ButtonNext";
 import HeaderAuth from "../../shared/components/HeaderAuth";
 import { Spinner } from "../../shared/components/Spinner";
-import { getCompanyServices } from "../../services/company/company";
-import { ServicesCompany } from "../../services/company/types";
 import { ServiceWithCheckboxFullService } from "../../shared/components/ServiceWithCheckboxFullService";
+import FullServicesHook from "./FullServicesHook";
 
 const FullServices = () => {
-  const route = useRoute();
-  const params = route.params as {
-    selectItem?: ServiceResponse;
-    services: ServiceResponse[];
-    categoryList: CategoryResponse[];
-  };
+  const {
+    isLoading,
+    navigation,
+    categoryList,
+    activeItem,
+    setLoadingImages,
+    loadingImages,
+    ativo,
+    services,
+    handleRecommendation,
+    handleSelectService,
+    listSelections,
+    mutateGetCompanyLoading,
+  } = FullServicesHook();
 
-  const [listSelections, setListSelections] = useState<Array<string>>([]);
-  const navigation = useNavigation<any>();
-  const [ativo, setAtivo] = useState("");
-  const [services, setServices] = useState<ServiceResponse[]>([]);
-  const [servicesCompany, setServicesCompany] = useState<ServicesCompany[]>([]);
-  const [loadingImages, setLoadingImages] = useState(true);
-
-  const { mutate: mutateGetServicesCompany } = useMutation({
-    mutationFn: (servicesIds: string[]) => getCompanyServices(servicesIds),
-    onSuccess: (data: ServicesCompany[]) => {
-      if (data.length > 0) {
-        setServicesCompany(data);
-        mutateGetServicesRecommended(listSelections);
-      }
-    },
-    onError: () => {
-      Alert.alert(
-        "Copiloto",
-        "Desculpe, estamos com problemas. Tente novamente mais tarde."
-      );
-    },
-  });
-  const { mutate: mutateGetServicesRecommended } = useMutation({
-    mutationFn: (servicesIds: string[]) => getServicesRecommended(servicesIds),
-    onSuccess: (data: ServiceRecommendResponseList) => {
-      const recommend = data?.data;
-      if (recommend && recommend.length > 0) {
-        navigation.navigate("RecommendationService", {
-          recommendServices: recommend,
-          services: servicesCompany,
-        });
-      } else {
-        navigation.navigate("MapView", { services: servicesCompany });
-      }
-    },
-    onError: () => {
-      Alert.alert(
-        "Copiloto",
-        "Desculpe, estamos com problemas. Tente novamente mais tarde."
-      );
-    },
-  });
-
-  const activeItem = (item: CategoryResponse) => {
-    if (listSelections.length > 0) {
-      Alert.alert(
-        "Copiloto",
-        "Deseja realmente mudar de categoria? Todos as suas seleções serão desfeitas",
-        [
-          {
-            text: "Cancelar",
-            style: "cancel",
-          },
-          { text: "Confirmar", onPress: () => handleChangeCategory(item) },
-        ]
-      );
-    } else {
-      handleChangeCategory(item);
-    }
-  };
-
-  const handleChangeCategory = (item: CategoryResponse) => {
-    setAtivo(item.nome);
-    setListSelections([]);
-    setServices(item?.services ? item.services : []);
-  };
-
-  const handleRecommendation = () => {
-    mutateGetServicesCompany(listSelections);
-    // mutateGetServicesRecommended(listSelections);
-  };
-
-  useEffect(() => {
-    if (params?.selectItem) {
-      let categoriaSelecionado: CategoryResponse | any;
-      params.categoryList.filter((item) => {
-        if (item.idCategoria === params.selectItem!.id_categoria) {
-          categoriaSelecionado = item;
-        }
-      });
-      handleChangeCategory(categoriaSelecionado);
-      handleSelectService(params.selectItem);
-    } else {
-      handleChangeCategory(params.categoryList[0]);
-    }
-  }, []);
-
-  const handleSelectService = (service: ServiceResponse) => {
-    if (listSelections.includes(service.idservice)) {
-      const auxServices: any = [];
-      listSelections.map((item: any) => {
-        item !== service.idservice && auxServices.push(item);
-      });
-      setListSelections(auxServices);
-    } else {
-      setListSelections([...listSelections, service.idservice]);
-    }
-  };
+  if (isLoading || mutateGetCompanyLoading) {
+    return <Spinner />;
+  }
 
   return (
     <S.Background>
@@ -134,8 +38,8 @@ const FullServices = () => {
         <S.Wrapper>
           <S.WrapperList>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {params.categoryList.length > 0 &&
-                params.categoryList.map((item) => {
+              {categoryList.length > 0 &&
+                categoryList.map((item) => {
                   const isActive = ativo === item.nome;
                   return (
                     <S.CardContainer

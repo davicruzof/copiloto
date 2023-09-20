@@ -6,6 +6,7 @@ import { Validate } from "../screens/Register/Validate";
 import RegisterVehicle from "../screens/Register/Veiculo";
 import RecoveryFirst from "../screens/Recovery/First";
 import RecoveryFinish from "../screens/Recovery/Final";
+import { Password } from "../screens/Password/indext";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ export const RoutesWithoutAuth = () => (
     <Stack.Screen name="SignIn" component={SignIn} />
     <Stack.Screen name="Register" component={Initial} />
     <Stack.Screen name="ValidateRegister" component={Validate} />
+    <Stack.Screen name="CreatePassword" component={Password} />
     <Stack.Screen name="RegisterVehicle" component={RegisterVehicle} />
     <Stack.Screen name="Recovery" component={RecoveryFirst} />
     <Stack.Screen name="RecoveryFinish" component={RecoveryFinish} />

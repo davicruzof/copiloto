@@ -16,6 +16,7 @@ import theme from "./src/shared/utils/theme";
 import Routes from "./src/routes";
 import { UserContextProvider } from "./src/contexts/userContext";
 import { OrcamentoContextProvider } from "./src/contexts/orcamento";
+import { ServicesMapContextProvider } from "./src/contexts/servicesMap";
 
 export default function App() {
   const [fontLoading] = useFonts({
@@ -28,6 +29,7 @@ export default function App() {
 
   const [user, setUser] = useState(null);
   const [orcamento, setOrcamento] = useState(null);
+  const [servicesMap, setServicesMap] = useState(null);
 
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -53,9 +55,11 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <UserContextProvider value={{ user, setUser }}>
           <OrcamentoContextProvider value={{ orcamento, setOrcamento }}>
-            <ThemeProvider theme={theme}>
-              <Routes />
-            </ThemeProvider>
+            <ServicesMapContextProvider value={{ servicesMap, setServicesMap }}>
+              <ThemeProvider theme={theme}>
+                <Routes />
+              </ThemeProvider>
+            </ServicesMapContextProvider>
           </OrcamentoContextProvider>
         </UserContextProvider>
       </QueryClientProvider>

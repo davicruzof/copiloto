@@ -1,5 +1,4 @@
-import * as Location from "expo-location";
-import React, { useEffect } from "react";
+import React, { Suspense, useContext } from "react";
 import { Dimensions, View } from "react-native";
 
 import { BottomSheetOffice } from "../BottomSheetOffice";
@@ -14,60 +13,20 @@ import MapSectionViewModel from "./MapSection.viewModel";
 
 const { height, width } = Dimensions.get("screen");
 
-export const MapSection = ({
-  typeBottomSheet,
-  listLocations,
-  setListLocations,
-  setTabActive,
-}: any) => {
+export const MapSection = ({ typeBottomSheet, setTabActive }: any) => {
   const {
-    viewActive,
-    setViewActive,
     visible,
-    mapPermission,
-    setMapPermission,
-    bottomSheetValue,
-    loadingMap,
-    setLoadingMap,
+    viewActive,
     coordenantes,
-    setCoordenantes,
+    setViewActive,
+    mapPermission,
+    servicesCompany,
+    bottomSheetValue,
     toggleBottomNavigationView,
   } = MapSectionViewModel();
 
-  useEffect(() => {
-    (async () => {
-      const permission = await Location.requestForegroundPermissionsAsync();
-      if (permission.status === "granted") {
-        const { coords } = await Location.getCurrentPositionAsync({});
-
-        setCoordenantes(coords);
-
-        setMapPermission(true);
-      } else {
-        setViewActive("list");
-        setMapPermission(false);
-      }
-    })();
-  }, []);
-
-  if (coordenantes === null) {
-    return <View />;
-  }
-
-  setTimeout(() => {
-    setLoadingMap(false);
-  }, 1000);
-
-  if (loadingMap) {
-    return (
-      <View style={{ width, height: height - 180 }}>
-        <Spinner />
-      </View>
-    );
-  }
-
   return (
-    <>
+    <Suspense fallback={<Spinner />}>
       <SwitchView
         mapPermission={mapPermission}
         active={viewActive}
@@ -75,25 +34,26 @@ export const MapSection = ({
       />
 
       {viewActive === "map" && mapPermission ? (
-        coordenantes !== null && (
+        coordenantes !== null &&
+        servicesCompany.length > 0 && (
           <MapView
             loadingEnabled
             loadingIndicatorColor="#2C94F4"
-            style={{ height: height - 120, width, zIndex: -1 }}
+            style={{ height: height - 120, width }}
             initialRegion={{
-              latitude: listLocations[0].latitude,
-              longitude: listLocations[0].longitude,
+              latitude: +coordenantes.latitude,
+              longitude: +coordenantes.longitude,
               latitudeDelta: 0.006,
               longitudeDelta: 0.006,
             }}
             scrollEnabled
           >
-            {listLocations.map((item: any, index: any) => (
+            {servicesCompany.map((item: any, index: any) => (
               <Marker
                 key={index}
                 coordinate={{
-                  latitude: item.latitude,
-                  longitude: item.longitude,
+                  latitude: parseFloat(item.latitude),
+                  longitude: parseFloat(item.longitude),
                 }}
                 onPress={() => toggleBottomNavigationView(item)}
               >
@@ -105,10 +65,10 @@ export const MapSection = ({
       ) : (
         <S.Container>
           <S.List showsVerticalScrollIndicator={false}>
-            {listLocations.map((item: any) => (
+            {servicesCompany.map((item: any) => (
               <CardList
                 data={item}
-                key={item.id}
+                key={item.id_company}
                 handlePress={() => toggleBottomNavigationView(item)}
               />
             ))}
@@ -121,10 +81,8 @@ export const MapSection = ({
         visible={visible}
         data={bottomSheetValue}
         setVisible={toggleBottomNavigationView}
-        setListLocations={setListLocations}
-        listLocations={listLocations}
         setTabActive={setTabActive}
       />
-    </>
+    </Suspense>
   );
 };

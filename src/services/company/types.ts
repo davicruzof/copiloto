@@ -16,3 +16,9 @@ export interface Servicesdetail {
   categoria: string;
   price: string;
 }
+
+export interface Companys {
+  services: string[];
+  cep?: string;
+  coordenadas?: { latitude: string; longitude: string };
+}

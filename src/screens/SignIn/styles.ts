@@ -11,7 +11,6 @@ export const Container = styled.SafeAreaView.attrs({
 })`
   background-color: ${({ theme }: { theme: DefaultTheme }) =>
     theme.colors.white};
-  padding-top: 40px;
 `;
 
 export const Wrapper = styled.View`

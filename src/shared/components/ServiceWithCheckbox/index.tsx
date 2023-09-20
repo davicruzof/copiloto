@@ -5,13 +5,21 @@ import info from "../../../assets/info.png";
 import * as S from "./styles";
 import { Image } from "react-native";
 
+interface ServiceWithCheckboxProps {
+  handleSelectService: () => void;
+  isActive: boolean;
+  title: string;
+  isInfo: boolean;
+  infoHandle: () => void;
+}
+
 export function ServiceWithCheckbox({
   handleSelectService,
   isActive,
   title,
   isInfo = false,
-  infoHandle = null,
-}) {
+  infoHandle,
+}: ServiceWithCheckboxProps) {
   return (
     <S.Service>
       <S.Content onPress={handleSelectService}>

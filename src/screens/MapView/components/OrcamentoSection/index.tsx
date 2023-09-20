@@ -9,16 +9,11 @@ import { OrcamentoContext } from "../../../../contexts/orcamento";
 import { useNavigation } from "@react-navigation/native";
 import * as S from "./styles";
 
-export const OrcamentoSection = ({
-  setTabActive,
-  setTypeBottomSheet,
-  setListLocations,
-}: any) => {
+export const OrcamentoSection = ({ setTabActive, setTypeBottomSheet }: any) => {
   const navigation = useNavigation<any>();
   const { orcamento, setOrcamento } = useContext(OrcamentoContext);
 
   const toggleBottomNavigationView = () => {
-    setListLocations(data);
     setOrcamento(null);
   };
 

@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { getBrands, getModels } from "../../../services/fipe";
 import { ButtonNext } from "../../../shared/components/ButtonNext";
 import { Drop } from "../../../shared/components/Drop";
@@ -6,12 +6,16 @@ import Header from "../../../shared/components/Header";
 import Input from "../../../shared/components/Input/Input";
 import { Spinner } from "../../../shared/components/Spinner";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { ButtonLigth } from "../../../shared/components/ButtonLigth";
 import React, { useState } from "react";
 import ModalShow from "./components/ModalShow/Modal";
 import * as S from "./style";
 
 const RegisterVehicle = () => {
   const navigation = useNavigation<any>();
+  const { params } = useRoute<any>();
+  const idUser = params.idUser;
+
   const [ano, setAno] = useState("");
   const [valid, setValid] = useState(true);
   const [marcas, setMarcas] = useState([]);
@@ -88,6 +92,8 @@ const RegisterVehicle = () => {
       kmRevisao: kmRevisao ? kmRevisao : "vazio",
       kmAtual: kmAtual ? kmAtual : "vazio",
     };
+
+    // direcionar para criar nova senha
   };
 
   function mascaraData() {
@@ -231,6 +237,11 @@ const RegisterVehicle = () => {
             onPress={sendData}
             disable={valid}
             disabled={valid}
+          />
+          <S.Separet />
+          <ButtonLigth
+            text="Pular"
+            onPress={() => navigation.navigate("CreatePassword", { idUser })}
           />
         </S.ContainerButton>
       </S.Wrapper>

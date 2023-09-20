@@ -1,62 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import * as S from "./styles";
-import { useNavigation, useRoute } from "@react-navigation/native";
 
-import { ServiceRecommendResponse } from "../../services/user/types";
 import { ServiceWithCheckbox } from "../../shared/components/ServiceWithCheckbox";
 import HeaderAuth from "../../shared/components/HeaderAuth";
 import { ScrollView } from "react-native";
 import { ButtonNext } from "../../shared/components/ButtonNext";
 import { ButtonNextWhite } from "../../shared/components/ButtonNextWhite";
-import { ServicesCompany } from "../../services/company/types";
 import RecommendationServiceModal from "./modal";
+import RecommendationServiceHook from "./RecomendationHook";
+import { Spinner } from "../../shared/components/Spinner";
 
 const RecommendationService = () => {
-  const navigation = useNavigation<any>();
-  const [modalAtributtes, setModalAtributtes] = useState({
-    title: "",
-    content: "",
-  });
-  const [modalVisible, setModalVisible] = useState(false);
-  const route = useRoute();
-  const { recommendServices, services } = route.params as {
-    recommendServices: ServiceRecommendResponse[];
-    services: ServicesCompany[];
-  };
+  const {
+    listSelections,
+    recommendServices,
+    navigation,
+    modalAttributes,
+    modalVisible,
+    setModalVisible,
+    handleNextScreen,
+    handleSelectService,
+    handleInfo,
+    handleNextScreenEmpty,
+    mutateGetCompanyLoading,
+  } = RecommendationServiceHook();
 
-  const [listSelections, setListSelections] = useState([]);
-
-  const handleSelectService = (service: ServiceRecommendResponse) => {
-    if (listSelections.includes(service.nome)) {
-      const auxServices: React.SetStateAction<never[]> = [];
-      listSelections.map((item) => {
-        item !== service.nome && auxServices.push(item);
-      });
-      setListSelections(auxServices);
-    } else {
-      setListSelections([...listSelections, service.nome]);
-    }
-  };
-
-  const handleInfo = (service: ServiceRecommendResponse) => {
-    setModalVisible(!modalVisible);
-    setModalAtributtes({
-      title: service.nome,
-      content: service.recommendation_text,
-    });
-  };
-
-  const handleNextScreen = async () => {
-    navigation.navigate("MapView", { services });
-  };
-
-  useEffect(() => {
-    recommendServices.map((item) =>
-      setListSelections((old) => [...old, item.nome])
-    );
-  }, []);
-
+  if (mutateGetCompanyLoading) {
+    return <Spinner />;
+  }
   return (
     <S.Background>
       <S.Container>
@@ -71,7 +43,9 @@ const RecommendationService = () => {
           <S.WrapperListServices>
             <ScrollView>
               {recommendServices.map((item) => {
-                const isActive = listSelections.includes(item.nome);
+                const isActive = listSelections.includes(
+                  item.recomended_id_service
+                );
                 return (
                   <ServiceWithCheckbox
                     title={item.nome}
@@ -92,15 +66,19 @@ const RecommendationService = () => {
               disable={listSelections.length === 0}
               disabled={listSelections.length === 0}
             />
-            <ButtonNextWhite onPress={handleNextScreen} text="Não obrigado!" />
+            <ButtonNextWhite
+              onPress={handleNextScreenEmpty}
+              text="Não obrigado!"
+            />
           </S.ButtonsContainer>
         </S.Wrapper>
       </S.Container>
+
       <RecommendationServiceModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        title={modalAtributtes.title}
-        content={modalAtributtes.content}
+        title={modalAttributes.title}
+        content={modalAttributes.content}
       />
     </S.Background>
   );

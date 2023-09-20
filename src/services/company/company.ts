@@ -1,14 +1,15 @@
 import { AxiosError } from "axios";
 import { api } from "../api";
-import { ServicesCompany } from "./types";
-// import { credentialsProps } from "./types";
+import { Companys, ServicesCompany } from "./types";
 
-export const getCompanyServices = async (
-  credentials: string[]
-): Promise<ServicesCompany[]> => {
+export const getCompanyServices = async ({
+  services,
+  cep,
+  coordenadas,
+}: Companys): Promise<ServicesCompany[]> => {
   try {
     const { data } = await api.post("/company/getcompanyserviceprices", {
-      services: credentials,
+      services,
     });
     return data.data;
   } catch (err) {
