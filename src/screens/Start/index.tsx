@@ -1,10 +1,10 @@
 import React from "react";
-import { Image } from "react-native";
+import { Image, StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import bg from "../../assets/bg.png";
-import logo from "../../assets/logo.png";
-import { Button } from "../../shared/components/Button";
-import { ButtonLigth } from "../../shared/components/ButtonLigth";
+import bg from "@assets/bg.png";
+import logo from "@assets/logo.png";
+import { Button } from "@components/Button";
+import { ButtonLigth } from "@components/ButtonLigth";
 import * as S from "./styles";
 
 function Start() {
@@ -15,7 +15,9 @@ function Start() {
   };
 
   return (
-    <S.Background source={bg}>
+    <S.Container>
+      <StatusBar translucent backgroundColor="transparent" />
+      <S.Fundo source={bg} />
       <S.Wrapper>
         <Image source={logo} />
         <S.Slogan>Tudo que seu veículo precisa está aqui!</S.Slogan>
@@ -27,7 +29,7 @@ function Start() {
           />
         </S.ContainerButtons>
       </S.Wrapper>
-    </S.Background>
+    </S.Container>
   );
 }
 export default Start;

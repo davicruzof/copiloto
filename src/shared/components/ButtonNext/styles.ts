@@ -1,7 +1,6 @@
-import { DefaultTheme } from "styled-components";
-import styled from "styled-components/native";
+import styled, { DefaultTheme } from "styled-components/native";
 
-export const Container = styled.TouchableOpacity<{ disable: boolean }>`
+export const Container = styled.Pressable<{ disable: boolean }>`
   background: ${(props: { theme: DefaultTheme }) => props.theme.colors.primary};
   width: ${(props: { theme: DefaultTheme }) => props.theme.spacing.full}%;
   height: 48px;
@@ -12,12 +11,12 @@ export const Container = styled.TouchableOpacity<{ disable: boolean }>`
   justify-content: space-between;
   border-radius: ${(props: { theme: DefaultTheme }) =>
     props.theme.spacing.xxsmall}px;
-  opacity: ${({ disable }) => (disable ? 0.6 : 1)};
+  opacity: ${({ disable }: { disable: boolean }) => (disable ? 0.6 : 1)};
 `;
 
 export const TextButton = styled.Text`
   color: ${(props: { theme: DefaultTheme }) => props.theme.colors.white};
   font-family: Jost_600SemiBold;
   font-size: ${(props: { theme: DefaultTheme }) =>
-    props.theme.fontSizes.medium}px;
+    props.theme.fontSizes.small}px;
 `;

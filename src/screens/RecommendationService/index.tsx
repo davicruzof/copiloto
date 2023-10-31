@@ -2,28 +2,34 @@ import React from "react";
 
 import * as S from "./styles";
 
-import { ServiceWithCheckbox } from "../../shared/components/ServiceWithCheckbox";
-import HeaderAuth from "../../shared/components/HeaderAuth";
+import { ServiceWithCheckbox } from "@components/ServiceWithCheckbox";
+import HeaderAuth from "@components/HeaderAuth";
 import { ScrollView } from "react-native";
-import { ButtonNext } from "../../shared/components/ButtonNext";
-import { ButtonNextWhite } from "../../shared/components/ButtonNextWhite";
+import { ButtonNext } from "@components/ButtonNext";
+import { ButtonNextWhite } from "@components/ButtonNextWhite";
+import { Spinner } from "@components/Spinner";
 import RecommendationServiceModal from "./modal";
 import RecommendationServiceHook from "./RecomendationHook";
-import { Spinner } from "../../shared/components/Spinner";
+import ModalCep from "@components/ModalCep";
 
 const RecommendationService = () => {
   const {
     listSelections,
-    recommendServices,
     navigation,
-    modalAttributes,
+    recommendServices,
     modalVisible,
+    modalAttributes,
+    handleInfo,
     setModalVisible,
     handleNextScreen,
     handleSelectService,
-    handleInfo,
     handleNextScreenEmpty,
     mutateGetCompanyLoading,
+    stateModal,
+    updateState,
+    nextScreen,
+    cep,
+    setCep,
   } = RecommendationServiceHook();
 
   if (mutateGetCompanyLoading) {
@@ -60,16 +66,22 @@ const RecommendationService = () => {
             </ScrollView>
           </S.WrapperListServices>
           <S.ButtonsContainer>
-            <ButtonNext
-              onPress={handleNextScreen}
-              text="Incluir serviços recomenados"
-              disable={listSelections.length === 0}
-              disabled={listSelections.length === 0}
-            />
-            <ButtonNextWhite
-              onPress={handleNextScreenEmpty}
-              text="Não obrigado!"
-            />
+            {mutateGetCompanyLoading ? (
+              <Spinner />
+            ) : (
+              <>
+                <ButtonNext
+                  onPress={handleNextScreen}
+                  text="Incluir serviços recomenados"
+                  disable={listSelections.length === 0}
+                  disabled={listSelections.length === 0}
+                />
+                <ButtonNextWhite
+                  onPress={handleNextScreenEmpty}
+                  text="Não obrigado!"
+                />
+              </>
+            )}
           </S.ButtonsContainer>
         </S.Wrapper>
       </S.Container>
@@ -79,6 +91,14 @@ const RecommendationService = () => {
         setModalVisible={setModalVisible}
         title={modalAttributes.title}
         content={modalAttributes.content}
+      />
+
+      <ModalCep
+        updateState={updateState}
+        nextScreen={nextScreen}
+        cep={cep}
+        setCep={setCep}
+        stateModal={stateModal}
       />
     </S.Background>
   );

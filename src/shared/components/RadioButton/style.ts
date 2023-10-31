@@ -1,7 +1,7 @@
 import { DefaultTheme } from "styled-components";
 import styled from "styled-components/native";
 
-export const Container = styled.TouchableOpacity`
+export const Container = styled.Pressable`
   flex-direction: row;
   margin-bottom: 8px;
 `;

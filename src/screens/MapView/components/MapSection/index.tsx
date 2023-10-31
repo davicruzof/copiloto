@@ -1,5 +1,5 @@
-import React, { Suspense, useContext } from "react";
-import { Dimensions, View } from "react-native";
+import React, { Suspense } from "react";
+import { Dimensions } from "react-native";
 
 import { BottomSheetOffice } from "../BottomSheetOffice";
 import { CardList } from "../CardList";
@@ -7,9 +7,10 @@ import MapView, { Marker } from "react-native-maps";
 import { MarkerPoint } from "../MarkerPoint";
 import SwitchView from "../SwitchView";
 
-import { Spinner } from "../../../../shared/components/Spinner";
+import { Spinner } from "@components/Spinner";
 import * as S from "./styles";
 import MapSectionViewModel from "./MapSection.viewModel";
+import theme from "@utils/theme";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -38,8 +39,9 @@ export const MapSection = ({ typeBottomSheet, setTabActive }: any) => {
         servicesCompany.length > 0 && (
           <MapView
             loadingEnabled
-            loadingIndicatorColor="#2C94F4"
+            loadingIndicatorColor={theme.colors.primary}
             style={{ height: height - 120, width }}
+            showsUserLocation
             initialRegion={{
               latitude: +coordenantes.latitude,
               longitude: +coordenantes.longitude,

@@ -3,23 +3,29 @@ import { Alert, View } from "react-native";
 
 import * as S from "./styles";
 
-import { ButtonLigthDanger } from "../../../../shared/components/ButtonLigthDanger";
-import { ButtonLigthNext } from "../../../../shared/components/ButtonLigthNext";
+import { ButtonLigthDanger } from "@components/ButtonLigthDanger";
+import { ButtonLigthNext } from "@components/ButtonLigthNext";
 import { BottomSheet } from "react-native-btr";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { ButtonNext } from "../../../../shared/components/ButtonNext";
-import { OrcamentoContext } from "../../../../contexts/orcamento";
+import { ButtonNext } from "@components/ButtonNext";
+import { OrcamentoContext } from "@contexts/orcamento";
 import { useNavigation } from "@react-navigation/native";
 
-export const BottomSheetOffice = ({
+export const BottomSheetOffice: React.FC<{
+  visible: boolean;
+  setVisible: any;
+  data: any;
+  type: string;
+  setTabActive: () => void;
+}> = ({
   visible,
   setVisible,
   data,
   type,
   setTabActive,
-}: any) => {
+}) => {
   const navigation = useNavigation<any>();
   const { bottom } = useSafeAreaInsets();
 

@@ -1,9 +1,12 @@
 import React from "react";
 
+import RadioButton from "@components/RadioButton";
 import * as S from "./styles";
-import RadioButton from "../../../../shared/components/RadioButton";
 
-export const SexoSelect = ({ sexo, setSexo }) => {
+export const SexoSelect: React.FC<{
+  sexo: string;
+  setSexo: (sexo: string) => void;
+}> = ({ sexo, setSexo }) => {
   return (
     <S.Container>
       <S.Label>Genêro</S.Label>

@@ -17,7 +17,7 @@ export const Title = styled.Text`
   margin-bottom: 16px;
 `;
 
-export const Button = styled.TouchableOpacity<{ active: Boolean }>`
+export const Button = styled.Pressable<{ active: Boolean }>`
   border-radius: 8px;
   background: ${(props) => (props.active ? "#f4f7fa" : "#e1eaf1")};
   width: 202px;

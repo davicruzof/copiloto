@@ -1,17 +1,18 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { ServiceRecommendResponse } from "services/user/types";
-import hookPermissionLocation from "../../shared/hooks/permissionLocation";
+import { ServiceRecommendResponse } from "@services/user/types";
+import hookPermissionLocation from "@hooks/permissionLocation";
 
 const RecommendationServiceHook = () => {
   const navigation = useNavigation<any>();
   const route = useRoute();
   const [listSelections, setListSelections] = useState<string[]>([]);
-
+  const [cep, setCep] = useState("");
   const { recommendServices, services } = route.params as {
     recommendServices: ServiceRecommendResponse[];
     services: string[];
   };
+  const [stateModal, setStateModal] = useState(false);
 
   const {
     requestPermission,
@@ -43,7 +44,7 @@ const RecommendationServiceHook = () => {
       });
       setListSelections(auxServices);
     } else {
-      setListSelections([...listSelections, service.nome]);
+      setListSelections(old => [...old, service.recomended_id_service]);
     }
   };
 
@@ -52,6 +53,18 @@ const RecommendationServiceHook = () => {
     setModalAttributes({
       title: service.nome,
       content: service.recommendation_text,
+    });
+  };
+
+  const updateState = () => {
+    setStateModal(!stateModal);
+  };
+
+  const nextScreen = () => {
+    updateState();
+    mutateGetServicesCompany({
+      services: listSelections,
+      cep,
     });
   };
 
@@ -64,9 +77,7 @@ const RecommendationServiceHook = () => {
         coordenadas: permission.coordenadas,
       });
     } else {
-      mutateGetServicesCompany({
-        services: [...services, ...listSelections],
-      });
+      updateState();
     }
   };
 
@@ -76,7 +87,6 @@ const RecommendationServiceHook = () => {
 
   const handleNextScreenEmpty = async () => {
     getCompanys();
-    // navigation.navigate("MapView", { services });
   };
 
   return {
@@ -91,6 +101,11 @@ const RecommendationServiceHook = () => {
     handleSelectService,
     handleNextScreenEmpty,
     mutateGetCompanyLoading,
+    stateModal,
+    updateState,
+    nextScreen,
+    cep,
+    setCep,
   };
 };
 

@@ -2,19 +2,14 @@ import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import DeviceInfo from "react-native-device-info";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "../screens/Home";
-import SearchHome from "../screens/SearchHome";
-import RecommendationService from "../screens/RecommendationService";
-import FullServices from "../screens/FullServices";
-import { Profile } from "../screens/Profile";
-import { Map } from "../screens/MapView";
-import Budget from "../screens/Budget";
-import { BudgetDetails } from "../screens/BudgetDetails";
-import Schedules from "../screens/Schedules";
+
+import Home from "@screens/Home";
+import Profile from "@screens/Profile";
+import Budget from "@screens/Budget";
+import Schedules from "@screens/Schedules";
+import theme from "@shared/utils/theme";
 
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
 
 export const User = () => {
   return (
@@ -24,7 +19,7 @@ export const User = () => {
         tabBarIcon: ({ color }) => {
           return <AntDesign name={route.name as any} size={31} color={color} />;
         },
-        tabBarActiveTintColor: "#2C94F4",
+        tabBarActiveTintColor: theme.colors.secondary,
         tabBarInactiveTintColor: "#A0A0A0",
         title: "",
         tabBarStyle: {
@@ -41,27 +36,3 @@ export const User = () => {
     </Tab.Navigator>
   );
 };
-
-export function AuthRoutes() {
-  return (
-    <Stack.Navigator
-      initialRouteName="Root"
-      screenOptions={{
-        headerShown: false,
-        headerStyle: {
-          backgroundColor: "#fff",
-        },
-      }}
-    >
-      <Stack.Screen name="Root" component={User} />
-      <Stack.Screen name="SearchHome" component={SearchHome} />
-      <Stack.Screen name="FullServices" component={FullServices} />
-      <Stack.Screen name="MapView" component={Map} />
-      <Stack.Screen name="BudgetDetails" component={BudgetDetails} />
-      <Stack.Screen
-        name="RecommendationService"
-        component={RecommendationService}
-      />
-    </Stack.Navigator>
-  );
-}

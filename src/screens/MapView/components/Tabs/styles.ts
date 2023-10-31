@@ -9,9 +9,7 @@ export const Container = styled.View`
   border-color: #f2f2f2;
 `;
 
-export const ButtonTab = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.6,
-})<{ isActive: boolean }>`
+export const ButtonTab = styled.Pressable<{ isActive: boolean }>`
   background-color: #fff;
   height: 56px;
   justify-content: center;

@@ -1,7 +1,6 @@
-import { DefaultTheme } from "styled-components";
-import styled from "styled-components/native";
+import styled, { DefaultTheme } from "styled-components/native";
 
-export const ButtonRecovery = styled.TouchableOpacity`
+export const ButtonRecovery = styled.Pressable`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -12,5 +11,4 @@ export const RecoveryText = styled.Text`
   color: ${({ theme }: { theme: DefaultTheme }) => theme.colors.primary};
   font-family: Jost_700Bold;
   font-size: ${({ theme }: { theme: DefaultTheme }) => theme.spacing.small}px;
-  margin-right: 10px;
 `;

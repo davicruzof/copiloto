@@ -1,7 +1,7 @@
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 
 export const Container = styled.View`
-  background: #FFFF;
+  background: #ffff;
   height: 100%;
 `;
 
@@ -30,14 +30,14 @@ export const ICon = styled.View`
 `;
 
 export const Name = styled.Text`
-  color: #2C94F4;
+  color: #2c94f4;
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 8px;
 `;
 
-export const Button = styled.TouchableOpacity``;
-export const Button2 = styled.TouchableOpacity`
+export const Button = styled.Pressable``;
+export const Button2 = styled.Pressable`
   position: absolute;
   bottom: 40px;
   width: 100%;
@@ -54,9 +54,9 @@ export const ContainerActions = styled.View`
   margin-top: 32px;
 `;
 
-export const ActionPerfil = styled.TouchableOpacity`
+export const ActionPerfil = styled.Pressable`
   border-bottom-width: 2px;
-  border-bottom-color: #F1F1F1;
+  border-bottom-color: #f1f1f1;
   padding: 16px 0;
   flex-direction: row;
   justify-content: space-between;
@@ -72,7 +72,7 @@ export const TextAction = styled.Text`
 export const Icone = styled.Image``;
 
 export const TextLogout = styled.Text`
-  color: #2C94F4;
+  color: #2c94f4;
   font-size: 16px;
   width: 100%;
   text-align: center;

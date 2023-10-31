@@ -15,16 +15,17 @@ const SearchHome = () => {
     categoryList: CategoryResponse[];
   };
 
+  function removerAcentos(str: string) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
   useEffect(() => {
     setServiceList([]);
-    if (search) {
-      const serviceAux = [];
-      services.map((item) => {
-        if (item?.nome.toLowerCase().includes(search.toLowerCase())) {
-          serviceAux.push(item);
-        }
-      });
-      setServiceList(serviceAux);
+    if (search.length > 0) {
+      const serviceFilter = services.filter((item) =>
+        removerAcentos(item.nome.toLowerCase()).includes(removerAcentos(search.toLowerCase()))
+      );
+      setServiceList(serviceFilter);
     }
   }, [search]);
 
@@ -35,6 +36,8 @@ const SearchHome = () => {
           <S.IconBack />
           <S.SearchInput
             onChangeText={setSearch}
+            autoFocus
+            testID="search"
             placeholder="Busque por serviços"
           />
         </S.Search>
@@ -42,7 +45,7 @@ const SearchHome = () => {
           {serviceList.length > 0 &&
             serviceList.map((item) => (
               <S.ButtonList
-                key={item.nome}
+                key={Math.random().toString()}
                 onPress={() => {
                   navigation.navigate("FullServices", {
                     services,

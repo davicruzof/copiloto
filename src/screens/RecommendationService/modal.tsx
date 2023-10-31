@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "react-native";
 
 import * as S from "./styles";
-import { Button } from "../../shared/components/Button";
+import { Button } from "@components/Button";
 
 const RecommendationServiceModal = ({
   modalVisible,

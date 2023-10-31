@@ -1,10 +1,9 @@
 import React from "react";
-import icon from "../../../assets/arrow3.png";
+import { PressableProps } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 import * as S from "./styles";
-import { Image } from "react-native";
-import { TouchableOpacityProps } from "react-native";
 
-interface ButtonProps extends TouchableOpacityProps {
+interface ButtonProps extends PressableProps {
   text: string;
   disable: boolean;
 }
@@ -13,7 +12,7 @@ export function ButtonNext({ text, disable, ...rest }: ButtonProps) {
   return (
     <S.Container {...rest} disable={disable}>
       <S.TextButton>{text}</S.TextButton>
-      <Image source={icon} />
+      <MaterialIcons name="keyboard-arrow-right" size={24} color="#fff" />
     </S.Container>
   );
 }

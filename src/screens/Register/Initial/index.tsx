@@ -1,15 +1,16 @@
 import React from "react";
+import { ScrollView, Pressable } from "react-native";
 
-import { ButtonNext } from "../../../shared/components/ButtonNext";
-import Header from "../../../shared/components/Header";
-import Input from "../../../shared/components/Input/Input";
-import { SexoSelect } from "../components/SexoSelect";
-import * as S from "./styles";
-import CheckBox from "../../../shared/components/CheckBox";
-import { ScrollView, TouchableOpacity } from "react-native";
-import { Spinner } from "../../../shared/components/Spinner";
+import { ButtonNext } from "@components/ButtonNext";
+import Header from "@components/Header";
+import Input from "@components/Input/Input";
+import CheckBox from "@components/CheckBox";
+import { Spinner } from "@components/Spinner";
+
 import BottomSheetCustom from "../components/BottomSheetTerms";
+import { SexoSelect } from "../components/SexoSelect";
 import useFirstFormSignup from "./useFirstFormSignup";
+import * as S from "./styles";
 
 const Initial = () => {
   const {
@@ -94,9 +95,9 @@ const Initial = () => {
             />
             <S.CheckBoxContainerText>
               <S.LabelRadio>Aceito os</S.LabelRadio>
-              <TouchableOpacity onPress={() => setOpenModalTerms(true)}>
+              <Pressable onPress={() => setOpenModalTerms(true)}>
                 <S.TextLink>Termos de uso</S.TextLink>
-              </TouchableOpacity>
+              </Pressable>
             </S.CheckBoxContainerText>
           </S.CheckGroup>
 

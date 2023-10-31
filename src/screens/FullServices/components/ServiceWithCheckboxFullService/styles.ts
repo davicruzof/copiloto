@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 
-export const Service = styled.TouchableOpacity`
+export const Service = styled.Pressable`
   min-height: 48px;
   background-color: #fff;
   width: 100%;
@@ -20,11 +20,12 @@ export const ServiceTitle = styled.Text`
 export const Checkbox = styled.View<{ active: boolean }>`
   background-color: ${(props) =>
     props.active ? props.theme.colors.primary : "#fff"};
-  width: 16px;
+  width: 18px;
   align-items: center;
   justify-content: center;
-  height: 16px;
+  height: 18px;
   margin-right: 8px;
   border-radius: 16px;
-  border: 2px solid ${(props) => props.theme.colors.primary};
+  border: ${({ active }) => (active ? 0 : 2)}px solid
+    ${(props) => props.theme.colors.primary};
 `;

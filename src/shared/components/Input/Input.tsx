@@ -14,7 +14,7 @@ export default function Input({
   const [color, setColor] = useState(theme.colors.disabled);
 
   return (
-    <View>
+    <View style={{width: '100%'}}>
       <S.Label>{label}</S.Label>
       <S.InputText
         placeholder={placeholder}

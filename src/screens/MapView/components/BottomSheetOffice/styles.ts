@@ -26,7 +26,7 @@ export const HeaderInfoContainer = styled.View`
 `;
 
 export const Title = styled.Text.attrs({
-  numberOfLines: 1,
+  numberOfLines: 2,
 })`
   font-size: 20px;
   max-width: 85%;

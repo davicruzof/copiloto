@@ -1,6 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { DefaultTheme } from "styled-components";
-import styled from "styled-components/native";
+import styled, { DefaultTheme } from "styled-components/native";
 
 export const Background = styled(LinearGradient).attrs({
   colors: ["#FDFDFD", "#E1EAF1"],
@@ -19,49 +18,7 @@ export const Wrapper = styled.View`
   padding: ${({ theme }: { theme: DefaultTheme }) => theme.spacing.medium}px;
 `;
 
-export const CardContainer = styled.TouchableOpacity`
-  width: 80px;
-  margin-right: 8px;
-`;
-
-export const CardContainerIcon = styled.View<{
-  isActive: boolean;
-  theme: DefaultTheme;
-}>`
-  background-color: ${(props: { isActive: boolean; theme: DefaultTheme }) =>
-    props.isActive
-      ? props.theme.colors.secondary
-      : props.theme.colors.text.slogan};
-  height: 80px;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  margin-bottom: 8px;
-`;
-
-export const CardIcon = styled.Image.attrs({
-  resizeMode: "contain",
-})`
-  height: 48px;
-  width: 48px;
-`;
-
-export const TitleCardCategoria = styled.Text<{
-  isActive: boolean;
-  theme: DefaultTheme;
-}>`
-  font-size: ${({ theme }: { theme: DefaultTheme }) =>
-    theme.fontSizes.xsmall}px;
-  font-family: Jost_500Medium;
-  color: ${(props: { isActive: boolean; theme: DefaultTheme }) =>
-    props.isActive
-      ? props.theme.colors.secondary
-      : props.theme.colors.text.categoryCard};
-  text-align: center;
-`;
-
-export const Service = styled.TouchableOpacity`
+export const Service = styled.Pressable`
   min-height: 48px;
   background-color: #fff;
   width: 100%;
@@ -78,7 +35,7 @@ export const ServiceTitle = styled.Text`
 
 export const WrapperList = styled.View`
   flex-direction: row;
-  height: 120px;
+  margin-bottom: 20px;
 `;
 
 export const WrapperListServices = styled.View`

@@ -1,12 +1,12 @@
 import React from "react";
 import { Image } from "react-native";
 
-import iconDisabled from "../../../../assets/iconServiceDisabled.png";
-import iconActive from "../../../../assets/iconActive.png";
+import iconDisabled from "@assets/iconServiceDisabled.png";
+import iconActive from "@assets/iconActive.png";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import * as S from "./styles";
-
-import icon from "../../../../assets/arrow2.png";
+import theme from "@utils/theme";
 
 export const CardService = ({
   text,
@@ -24,7 +24,13 @@ export const CardService = ({
         <Image source={iconStatus} />
         <S.Title isActive={isActive}>{text}</S.Title>
       </S.Wrapper>
-      {isActive && <Image source={icon} />}
+      {isActive && (
+        <MaterialIcons
+          name="keyboard-arrow-right"
+          size={28}
+          color={theme.colors.primary}
+        />
+      )}
     </S.Container>
   );
 };

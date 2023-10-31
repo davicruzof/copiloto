@@ -1,47 +1,32 @@
 import React from "react";
-import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, Text } from "react-native";
 
-import { ButtonLigthDanger } from "../../../../shared/components/ButtonLigthDanger";
+import { ButtonLigthDanger } from "@components/ButtonLigthDanger";
 import { BottomSheet } from "react-native-btr";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const { width } = Dimensions.get("screen");
+import * as S from "./styles";
 
-const BottomSheetCustom = ({ visible, setVisible, terms }) => {
+const BottomSheetCustom: React.FC<{
+  visible: boolean;
+  setVisible: () => void;
+  terms: string;
+}> = ({ visible, setVisible, terms }) => {
   const { bottom } = useSafeAreaInsets();
 
   return (
     <BottomSheet visible={visible} onBackButtonPress={setVisible}>
-      <View style={[styles.contentContainer, { paddingBottom: bottom + 12 }]}>
+      <S.Container bottom={bottom}>
         <ScrollView>
-          <View
-            style={{
-              width: "100%",
-              justifyContent: "space-between",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
+          <S.WrapperTerms>
             <Text>{terms}</Text>
-          </View>
+          </S.WrapperTerms>
         </ScrollView>
 
         <ButtonLigthDanger text="fechar" onPress={setVisible} />
-      </View>
+      </S.Container>
     </BottomSheet>
   );
 };
 
 export default BottomSheetCustom;
-
-const styles = StyleSheet.create({
-  contentContainer: {
-    minHeight: 300,
-    paddingHorizontal: 16,
-    paddingVertical: 24,
-    borderTopRightRadius: 13,
-    borderTopLeftRadius: 13,
-    backgroundColor: "#fff",
-    alignItems: "center",
-  },
-});

@@ -1,4 +1,4 @@
-import { TouchableOpacity } from "react-native";
+import { Pressable } from "react-native";
 import { DefaultTheme } from "styled-components";
 import styled from "styled-components/native";
 
@@ -14,7 +14,7 @@ export const Header = styled.View`
   margin-bottom: 16px;
 `;
 
-export const ButtonClose = styled.TouchableOpacity`
+export const ButtonClose = styled.Pressable`
   height: 40px;
   width: 40px;
 `;
@@ -30,7 +30,7 @@ export const Title = styled.Text`
   color: ${({ theme }: { theme: DefaultTheme }) => theme.colors.black};
 `;
 
-export const ButtonSelection = styled.TouchableOpacity`
+export const ButtonSelection = styled.Pressable`
   height: 55px;
   width: 100%;
   border-width: 1px;

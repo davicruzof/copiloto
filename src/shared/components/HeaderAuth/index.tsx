@@ -1,10 +1,13 @@
 import React from "react";
 import { Container, Title, ButtonBack } from "./styles";
-import icon from "../../../assets/arrow.png";
-import { Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import { MaterialIcons } from "@expo/vector-icons";
+import theme from "@utils/theme";
 
-const HeaderAuth = ({ handlePressHeader, title }: any) => {
+const HeaderAuth: React.FC<{
+  handlePressHeader?: () => void;
+  title: string;
+}> = ({ handlePressHeader, title }) => {
   return (
     <>
       <StatusBar style="dark" translucent={false} backgroundColor="#FFFf" />
@@ -12,7 +15,7 @@ const HeaderAuth = ({ handlePressHeader, title }: any) => {
       <Container>
         {handlePressHeader && (
           <ButtonBack onPress={handlePressHeader}>
-            <Image source={icon} />
+            <MaterialIcons name="keyboard-arrow-left" size={32} color={theme.colors.primary} />
           </ButtonBack>
         )}
         <Title>{title}</Title>

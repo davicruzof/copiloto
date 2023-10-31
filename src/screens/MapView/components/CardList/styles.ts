@@ -1,7 +1,7 @@
 import { Dimensions } from "react-native";
 import styled from "styled-components/native";
 
-export const Container = styled.TouchableOpacity.attrs({
+export const Container = styled.Pressable.attrs({
   shadowColor: "#202020",
   shadowOffset: {
     width: 0,
@@ -37,9 +37,9 @@ export const Value = styled.Text`
 `;
 
 export const Title = styled.Text.attrs({
-  numberOfLines: 1,
+  numberOfLines: 2,
 })`
-  font-size: 20px;
+  font-size: 16px;
   max-width: 70%;
   text-overflow: clip;
   font-family: Jost_600SemiBold;

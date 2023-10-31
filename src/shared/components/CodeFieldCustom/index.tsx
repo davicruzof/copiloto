@@ -5,7 +5,11 @@ import {
 } from "react-native-confirmation-code-field";
 import * as S from "./styles";
 
-export const CodeFieldCustom = ({ ref, value, setValue }) => {
+export const CodeFieldCustom = ({ ref, value, setValue }: {
+  ref: React.MutableRefObject<any>;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
@@ -20,7 +24,11 @@ export const CodeFieldCustom = ({ ref, value, setValue }) => {
       cellCount={4}
       keyboardType="number-pad"
       textContentType="oneTimeCode"
-      renderCell={({ index, symbol, isFocused }) => (
+      renderCell={({ index, symbol, isFocused }: {
+        index: number;
+        symbol: string;
+        isFocused: boolean;
+      }) => (
         <S.TextCustom
           focus={isFocused}
           key={index}

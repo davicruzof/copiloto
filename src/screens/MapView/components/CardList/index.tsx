@@ -5,8 +5,13 @@ import * as S from "./styles";
 
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { ServicesCompany } from "@services/company/types";
 
-export const CardList = ({ data, handlePress, ...rest }: any) => {
+export const CardList: React.FC<{
+  data: ServicesCompany;
+  handlePress: () => void;
+}> = ({ data, handlePress, ...rest }) => {
+
   return (
     <S.Container onPress={handlePress} {...rest}>
       <View

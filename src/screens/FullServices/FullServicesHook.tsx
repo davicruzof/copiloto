@@ -6,9 +6,9 @@ import {
   CategoryResponse,
   ServiceRecommendResponseList,
   ServiceResponse,
-} from "../../services/user/types";
-import { getServicesRecommended } from "../../services/user/user";
-import hookPermissionLocation from "../../shared/hooks/permissionLocation";
+} from "@services/user/types";
+import { getServicesRecommended } from "@services/user/user";
+import hookPermissionLocation from "@hooks/permissionLocation";
 
 const FullServicesHook = () => {
   const route = useRoute();
@@ -21,31 +21,16 @@ const FullServicesHook = () => {
   };
 
   const [listSelections, setListSelections] = useState<string[]>([]);
-
   const [ativo, setAtivo] = useState("");
   const [services, setServices] = useState<ServiceResponse[]>([]);
-  const [loadingImages, setLoadingImages] = useState(true);
+  const [cep, setCep] = useState("");
+  const [stateModal, setStateModal] = useState(false);
 
   const {
     mutateGetCompanyLoading,
     requestPermission,
     mutateGetServicesCompany,
   } = hookPermissionLocation();
-
-  const getCompanys = async () => {
-    const permission = await requestPermission();
-
-    if (permission?.coordenadas) {
-      mutateGetServicesCompany({
-        services: listSelections,
-        coordenadas: permission.coordenadas,
-      });
-    } else {
-      mutateGetServicesCompany({
-        services: listSelections,
-      });
-    }
-  };
 
   const { mutate: mutateGetServicesRecommended, isLoading } = useMutation({
     mutationFn: (servicesIds: string[]) => getServicesRecommended(servicesIds),
@@ -67,6 +52,32 @@ const FullServicesHook = () => {
       );
     },
   });
+
+  const updateState = () => {
+    setStateModal(!stateModal);
+  };
+
+
+  const nextScreen = () => {
+    updateState();
+    mutateGetServicesCompany({
+      services: listSelections,
+      cep,
+    });
+  };
+
+  const getCompanys = async () => {
+    const permission = await requestPermission();
+
+    if (permission?.coordenadas) {
+      mutateGetServicesCompany({
+        services: listSelections,
+        coordenadas: permission.coordenadas,
+      });
+    } else {
+      updateState();
+    }
+  };
 
   const activeItem = (item: CategoryResponse) => {
     if (listSelections.length > 0) {
@@ -130,12 +141,15 @@ const FullServicesHook = () => {
     activeItem,
     handleSelectService,
     handleRecommendation,
-    setLoadingImages,
-    loadingImages,
     ativo,
     services,
     listSelections,
     mutateGetCompanyLoading,
+    cep,
+    setCep,
+    updateState,
+    stateModal,
+    nextScreen,
   };
 };
 

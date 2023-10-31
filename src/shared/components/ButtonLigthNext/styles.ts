@@ -1,7 +1,7 @@
 import { DefaultTheme } from "styled-components";
 import styled from "styled-components/native";
 
-export const ButtonRecovery = styled.TouchableOpacity`
+export const ButtonRecovery = styled.Pressable`
   display: flex;
   flex-direction: row;
   align-items: center;

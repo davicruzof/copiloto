@@ -1,17 +1,12 @@
 import React from "react";
-import icon from "../../../assets/check.png";
-import info from "../../../assets/info.png";
+import Feather from "@expo/vector-icons/Feather";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import theme from "@utils/theme";
 
+import { ServiceWithCheckboxProps } from "./types";
 import * as S from "./styles";
-import { Image } from "react-native";
 
-interface ServiceWithCheckboxProps {
-  handleSelectService: () => void;
-  isActive: boolean;
-  title: string;
-  isInfo: boolean;
-  infoHandle: () => void;
-}
+
 
 export function ServiceWithCheckbox({
   handleSelectService,
@@ -23,14 +18,20 @@ export function ServiceWithCheckbox({
   return (
     <S.Service>
       <S.Content onPress={handleSelectService}>
-        <S.Checkbox active={isActive}>
-          {isActive && <Image source={icon} />}
-        </S.Checkbox>
+        {isActive ? (
+          <AntDesign
+            name="checkcircle"
+            size={16}
+            color={theme.colors.primary}
+          />
+        ) : (
+          <S.Checkbox />
+        )}
         <S.ServiceTitle>{title}</S.ServiceTitle>
       </S.Content>
       {isInfo && (
         <S.InfoButton onPress={infoHandle}>
-          <Image source={info} />
+          <Feather name="info" size={24} color={theme.colors.primary} />
         </S.InfoButton>
       )}
     </S.Service>

@@ -1,23 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
-import { RoutesWithoutAuth } from "./RoutesWithoutAuth";
-import { AuthRoutes } from "./AuthRoutes";
-import { UserContext } from "../contexts/userContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Spinner } from "../shared/components/Spinner";
+import RoutesWithoutAuth from "./RoutesWithoutAuth";
+import AuthRoutes from "./StackAuth";
+import { UserContext } from "../contexts/userContext";
+import { Spinner } from "@shared/components/Spinner";
 
 const Routes = () => {
   const { user, setUser } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
 
+  const userAuthenticated = async () => {
+    const userValue = await AsyncStorage.getItem("@user");
+    if (userValue) {
+      setUser({ user: JSON.parse(userValue), auth: true });
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
-    (async () => {
-      const userValue = await AsyncStorage.getItem("@user");
-      if (userValue) {
-        setUser({ user: JSON.parse(userValue), auth: true });
-      }
-      setLoading(false);
-    })();
-  }, []);
+    userAuthenticated();
+  }, [user]);
 
   if (loading) {
     return <Spinner />;

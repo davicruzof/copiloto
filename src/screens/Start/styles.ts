@@ -1,14 +1,19 @@
-import { DefaultTheme } from "styled-components";
-import styled from "styled-components/native";
+import styled, { DefaultTheme } from "styled-components/native";
 
-export const Background = styled.ImageBackground.attrs({
-  resizeMode: "cover",
-})`
+export const Container = styled.View`
   width: ${({ theme }: { theme: DefaultTheme }) => theme.spacing.full}%;
   height: ${({ theme }: { theme: DefaultTheme }) => theme.spacing.full}%;
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+export const Fundo = styled.Image.attrs({
+  resizeMode: "cover",
+})`
+  flex: 1;
+  width: ${({ theme }: { theme: DefaultTheme }) => theme.spacing.full}%;
+  height: ${({ theme }: { theme: DefaultTheme }) => theme.spacing.full}%;
+  position: absolute;
 `;
 
 export const Wrapper = styled.View`

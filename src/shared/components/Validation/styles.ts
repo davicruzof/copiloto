@@ -1,11 +1,16 @@
-import { TouchableOpacity } from "react-native";
+import { Dimensions } from "react-native";
 import { DefaultTheme } from "styled-components";
 import styled from "styled-components/native";
+
+const { height } = Dimensions.get("screen");
+
+const sub = height * 0.3;
 
 export const Container = styled.SafeAreaView.attrs({
   flex: 1,
 })`
   background-color: #fff;
+  padding-top: 32px;
 `;
 
 export const Wrapper = styled.View`
@@ -25,7 +30,8 @@ export const Title = styled.Text`
 
 export const ContainerButton = styled.View`
   position: absolute;
-  left: ${({ theme }: { theme: DefaultTheme }) => theme.spacing.medium}px;
-  bottom: 56px;
-  width: ${({ theme }: { theme: DefaultTheme }) => theme.spacing.full}%;
+  left: ${({ theme }: { theme: DefaultTheme }) => theme.spacing.small}px;
+  width: 100%;
+  margin-top: ${height - sub}px;
+
 `;

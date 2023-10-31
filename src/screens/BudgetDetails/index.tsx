@@ -1,11 +1,11 @@
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, View } from "react-native";
 
 import * as S from "./styles";
-import HeaderAuth from "../../shared/components/HeaderAuth";
+import HeaderAuth from "@components/HeaderAuth";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { Ionicons, FontAwesome5, AntDesign } from "@expo/vector-icons";
-import { Button } from "../../shared/components/Button";
-import { ButtonLigth } from "../../shared/components/ButtonLigth";
+import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
+import { Button } from "@components/Button";
+import { ButtonLigth } from "@components/ButtonLigth";
 import { TimeLine } from "./TimeLine";
 import { Fragment } from "react";
 

@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import hookPermissionLocation from "../../../../shared/hooks/permissionLocation";
-import { ServicesMapContext } from "../../../../contexts/servicesMap";
-import { OrcamentoContext } from "../../../../contexts/orcamento";
-import { ServicesCompany } from "../../../../services/company/types";
+import hookPermissionLocation from "@hooks/permissionLocation";
+import { ServicesMapContext } from "@contexts/servicesMap";
+import { OrcamentoContext } from "@contexts/orcamento";
+import { ServicesCompany } from "@services/company/types";
 
 const MapSectionViewModel = () => {
   const { orcamento } = useContext(OrcamentoContext);
@@ -43,7 +43,6 @@ const MapSectionViewModel = () => {
   useEffect(() => {
     (async () => {
       const permission = await requestPermission();
-
       if (permission?.coordenadas) {
         setCoordenantes(permission.coordenadas);
         setMapPermission(true);

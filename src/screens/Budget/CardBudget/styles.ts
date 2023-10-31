@@ -1,4 +1,3 @@
-import { TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 
 export const Container = styled.View`
@@ -9,7 +8,7 @@ export const Container = styled.View`
   margin-bottom: 16px;
 `;
 
-export const Header = styled.TouchableOpacity`
+export const Header = styled.Pressable`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

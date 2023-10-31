@@ -1,6 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { DefaultTheme } from "styled-components";
-import styled from "styled-components/native";
+import styled, { DefaultTheme } from "styled-components/native";
 
 export const Background = styled(LinearGradient).attrs({
   colors: ["#FDFDFD", "#E1EAF1"],
@@ -29,7 +28,7 @@ export const WrapperListServices = styled.View`
   margin-top: 24px;
 `;
 
-export const Service = styled.TouchableOpacity`
+export const Service = styled.Pressable`
   min-height: 48px;
   background-color: #fff;
   width: 100%;

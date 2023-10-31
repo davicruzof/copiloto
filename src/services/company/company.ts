@@ -2,15 +2,14 @@ import { AxiosError } from "axios";
 import { api } from "../api";
 import { Companys, ServicesCompany } from "./types";
 
-export const getCompanyServices = async ({
-  services,
-  cep,
-  coordenadas,
-}: Companys): Promise<ServicesCompany[]> => {
+export const getCompanyServices = async (
+  credentials: Companys
+): Promise<ServicesCompany[]> => {
   try {
-    const { data } = await api.post("/company/getcompanyserviceprices", {
-      services,
-    });
+    const { data } = await api.post(
+      "/company/getcompanyserviceprices",
+      credentials
+    );
     return data.data;
   } catch (err) {
     // eslint-disable-next-line no-unsafe-optional-chaining

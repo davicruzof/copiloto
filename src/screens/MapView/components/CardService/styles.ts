@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 
-export const Container = styled.TouchableOpacity.attrs({
+export const Container = styled.Pressable.attrs({
   shadowColor: "#202020",
   shadowOffset: {
     width: 0,

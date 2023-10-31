@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, Text, Image } from "react-native";
+import { Pressable, Text, Image } from "react-native";
 import icon from "../../assets/arrow_select.png";
 
 export const Drop = ({ value, cor, label, ...props }) => {
@@ -14,7 +14,7 @@ export const Drop = ({ value, cor, label, ...props }) => {
       >
         {label}
       </Text>
-      <TouchableOpacity
+      <Pressable
         {...props}
         style={{
           height: 45,
@@ -30,7 +30,7 @@ export const Drop = ({ value, cor, label, ...props }) => {
       >
         <Text style={{ color: cor ? "#002547" : "#AEBECC" }}>{value}</Text>
         <Image source={icon} />
-      </TouchableOpacity>
+      </Pressable>
     </>
   );
 };

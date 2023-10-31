@@ -19,7 +19,7 @@ import icon3 from "../../assets/arrow2.png";
 import { UserContext } from "../../contexts/userContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export function Profile() {
+export default function Profile() {
   const {
     user: { user },
     setUser,

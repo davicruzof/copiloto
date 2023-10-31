@@ -1,5 +1,4 @@
-import { DefaultTheme } from "styled-components";
-import styled from "styled-components/native";
+import styled, { DefaultTheme } from "styled-components/native";
 
 export const Label = styled.Text`
   font-size: ${({ theme }: { theme: DefaultTheme }) => theme.fontSizes.small}px;
@@ -20,6 +19,7 @@ export const InputText = styled.TextInput.attrs(
   border: 2px solid ${(props: { focus: any }) => props.focus};
   border-radius: 8px;
   height: 45px;
+  color: #000;
   width: ${({ theme }: { theme: DefaultTheme }) => theme.spacing.full}%;
   padding: 0 ${({ theme }: { theme: DefaultTheme }) => theme.spacing.small}px;
 `;

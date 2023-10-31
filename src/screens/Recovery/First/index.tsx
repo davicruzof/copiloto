@@ -1,38 +1,20 @@
-import React, { useState } from "react";
-import { Alert, Keyboard } from "react-native";
+import React from "react";
+import { Keyboard } from "react-native";
+import Input from "@components/Input/Input";
+import Header from "@components/Header";
+import { ButtonNext } from "@components/ButtonNext";
+import { Spinner } from "@components/Spinner";
 import * as S from "./styles";
-import Input from "../../../shared/components/Input/Input";
-import { useNavigation } from "@react-navigation/native";
-import Header from "../../../shared/components/Header";
-import { ButtonNext } from "../../../shared/components/ButtonNext";
-import { recoveryPassword } from "../../../services/auth/auth";
-import { useMutation } from "@tanstack/react-query";
-import { Spinner } from "../../../shared/components/Spinner";
+import RecoveryFirstViewModel from "./RecoveryFirstViewModel";
 
 const RecoveryFirst = () => {
-  const navigation = useNavigation<any>();
-  const [email, setEmail] = useState("");
-
-  const { mutate: mutateRecoveryPassword, isLoading: isLoadingRecovery } =
-    useMutation({
-      mutationFn: (formData: string) => recoveryPassword(formData),
-      onSuccess: (data) => {
-        Alert.alert("Copiloto", data.message);
-        if (data.success) {
-          navigation.navigate("RecoveryFinish", { idUser: data.idUser });
-        }
-      },
-      onError: () => {
-        Alert.alert(
-          "Copiloto",
-          "Desculpe, estamos com problemas. Tente novamente mais tarde."
-        );
-      },
-    });
-
-  const recovery = () => {
-    mutateRecoveryPassword(email);
-  };
+   const {
+    navigation,
+    email,
+    setEmail,
+    isLoadingRecovery,
+    recovery,
+  } = RecoveryFirstViewModel();
 
   if (isLoadingRecovery) {
     return <Spinner />;

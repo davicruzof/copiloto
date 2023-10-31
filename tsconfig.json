@@ -1,9 +1,29 @@
 {
   "extends": "@tsconfig/react-native/tsconfig.json",    
   "compilerOptions": {
-    "skipLibCheck": true,
-    "baseUrl": "./src",
-    "typeRoots": ["declarations.d.ts","styled.d.ts"]                              /* Skip type checking all .d.ts files. */
+    "baseUrl": ".",
+    "paths": {
+      "@assets/*": ["./src/assets/*"],
+      "@navigation/*": ["./src/routes/*"],
+      "@contexts/*": ["./src/contexts/*"],
+      "@screens/*": ["./src/screens/*"],
+      "@services/*": ["./src/services/*"],
+      "@utils/*": ["./src/shared/utils/*"],
+      "@components/*": ["./src/shared/components/*"],
+      "@hooks/*": ["./src/shared/hooks/*"],
+      "@shared/*": ["./src/shared/*"],
+    },
+    "typeRoots": ["declarations.d.ts","styled.d.ts","./node_modules/@types"]                              /* Skip type checking all .d.ts files. */
   },
-  "exclude": ["node_modules", "babel.config.js"]
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.js",
+    "./src/**/*.tsx",
+    "./src/**/**/*.tsx",
+    "./src/**/**/*.ts",
+    "./App.tsx",
+    "./src/**/*",
+    "./src/**/*",
+    "./src/**/*.*"
+  ]
 }

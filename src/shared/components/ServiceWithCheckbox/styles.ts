@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 
-export const Service = styled.View`
+export const Service = styled.Pressable`
   min-height: 48px;
   background-color: #fff;
   width: 100%;
@@ -12,9 +12,12 @@ export const Service = styled.View`
   justify-content: space-between;
 `;
 
-export const InfoButton = styled.TouchableOpacity``;
+export const InfoButton = styled.Pressable`
+  padding: 4px;
+  z-index: 1;
+`;
 
-export const Content = styled.TouchableOpacity`
+export const Content = styled.Pressable`
   flex-direction: row;
   align-items: center;
 `;
@@ -23,16 +26,17 @@ export const ServiceTitle = styled.Text`
   color: #002547;
   font-size: 16px;
   font-family: Jost_500Medium;
+  margin-left: 8px;
 `;
 
-export const Checkbox = styled.View<{ active: boolean }>`
-  background-color: ${(props) =>
-    props.active ? props.theme.colors.primary : "#fff"};
+export const Checkbox = styled.View`
+  background-color: #fff;
   width: 16px;
   align-items: center;
   justify-content: center;
   height: 16px;
-  margin-right: 8px;
   border-radius: 16px;
-  border: 2px solid ${(props) => props.theme.colors.primary};
+  border: 2px solid
+    ${(props: { theme: { colors: { primary: any } } }) =>
+      props.theme.colors.primary};
 `;

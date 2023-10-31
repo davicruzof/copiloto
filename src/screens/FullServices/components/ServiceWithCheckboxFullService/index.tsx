@@ -1,8 +1,7 @@
 import React from "react";
-import icon from "../../../assets/check.png";
+import { AntDesign } from "@expo/vector-icons";
 
 import * as S from "./styles";
-import { Image } from "react-native";
 
 export function ServiceWithCheckboxFullService({
   handleSelectService,
@@ -12,7 +11,7 @@ export function ServiceWithCheckboxFullService({
   return (
     <S.Service onPress={handleSelectService}>
       <S.Checkbox active={isActive}>
-        {isActive && <Image source={icon} />}
+        {isActive && <AntDesign name="check" size={14} color="#fff" />}
       </S.Checkbox>
       <S.ServiceTitle>{title}</S.ServiceTitle>
     </S.Service>

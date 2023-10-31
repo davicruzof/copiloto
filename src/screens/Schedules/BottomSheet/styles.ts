@@ -45,7 +45,7 @@ export const Value = styled(BaseText)`
   font-size: 16px;
 `;
 
-export const ScheduleItem = styled.TouchableOpacity`
+export const ScheduleItem = styled.Pressable`
   background-color: #0056a5;
   width: 100%;
   padding: 16px;

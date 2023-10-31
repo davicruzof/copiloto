@@ -2,14 +2,14 @@ import React from "react";
 
 import * as S from "./styles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { TouchableOpacity } from "react-native";
+import { Pressable } from "react-native";
 import { Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const SwitchView = ({ active, setActive, mapPermission }: any) => {
   const { top } = useSafeAreaInsets();
   return (
     <S.Container top={top}>
-      <TouchableOpacity
+      <Pressable
         disabled={!mapPermission}
         onPress={() => setActive("map")}
         style={{ marginRight: 30 }}
@@ -19,14 +19,14 @@ const SwitchView = ({ active, setActive, mapPermission }: any) => {
           size={24}
           color={active === "map" ? "#2c94f4" : "#AEBECC"}
         />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => setActive("list")}>
+      </Pressable>
+      <Pressable onPress={() => setActive("list")}>
         <Entypo
           name="list"
           size={24}
           color={active === "list" ? "#2c94f4" : "#AEBECC"}
         />
-      </TouchableOpacity>
+      </Pressable>
     </S.Container>
   );
 };

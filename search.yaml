@@ -1,0 +1,18 @@
+appId: com.copiloto
+---
+- clearState
+- launchApp
+- tapOn: 'Entrar'
+- tapOn: 'Digite o seu email'
+- inputText: 'daviondejesus@gmail.com'
+- tapOn: 'Digite a sua senha'
+- inputText: '1234#vidA'
+- hideKeyboard
+- tapOn: 
+    id: 'entrar'
+- tapOn: 'Busque por serviços'
+- inputText: 'Troca'
+- hideKeyboard
+- tapOn: 'Troca de filtros de ar'
+- tapOn: 'Confirmar dados'
+

@@ -1,7 +1,12 @@
-import { DefaultTheme } from "styled-components";
-import styled from "styled-components/native";
+import styled, { DefaultTheme } from "styled-components/native";
 
 export const Container = styled.View`
+  padding-top: 48px;
+  background-color: ${({ theme }: { theme: DefaultTheme }) =>
+    theme.colors.white};
+`;
+
+export const Wrapper = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -20,8 +25,8 @@ export const Title = styled.Text`
   color: ${({ theme }: { theme: DefaultTheme }) => theme.colors.primary};
 `;
 
-export const ButtonBack = styled.TouchableOpacity`
+export const ButtonBack = styled.Pressable`
   padding: 10px;
   position: absolute;
-  left: 20px;
+  left: 4px;
 `;

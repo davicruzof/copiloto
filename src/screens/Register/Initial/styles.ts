@@ -1,11 +1,10 @@
-import { DefaultTheme } from "styled-components";
-import styled from "styled-components/native";
+import styled, { DefaultTheme } from "styled-components/native";
 
 export const Container = styled.SafeAreaView.attrs({
   flex: 1,
 })`
-  background-color: #fff;
-  padding-top: 40px;
+  background-color: ${({ theme }: { theme: DefaultTheme }) =>
+    theme.colors.white};
 `;
 
 export const Wrapper = styled.View`
@@ -34,7 +33,6 @@ export const CheckGroup = styled.View`
 
 export const LabelRadio = styled.Text`
   font-size: ${({ theme }: { theme: DefaultTheme }) => theme.fontSizes.small}px;
-  margin-right: 10px;
   color: ${({ theme }: { theme: DefaultTheme }) => theme.colors.text.dark};
   font-family: Jost_700Bold;
 `;

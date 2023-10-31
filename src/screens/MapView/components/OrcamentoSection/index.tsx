@@ -2,10 +2,10 @@ import React, { useContext } from "react";
 import { Alert, ScrollView, View } from "react-native";
 
 import { CardList } from "../CardList";
-import { ButtonNext } from "../../../../shared/components/ButtonNext";
-import { ButtonLigthDanger } from "../../../../shared/components/ButtonLigthDanger";
+import { ButtonNext } from "@components/ButtonNext";
+import { ButtonLigthDanger } from "@components/ButtonLigthDanger";
 import { CardService } from "../CardService";
-import { OrcamentoContext } from "../../../../contexts/orcamento";
+import { OrcamentoContext } from "@contexts/orcamento";
 import { useNavigation } from "@react-navigation/native";
 import * as S from "./styles";
 
@@ -77,7 +77,6 @@ export const OrcamentoSection = ({ setTabActive, setTypeBottomSheet }: any) => {
               orcamento.map((item: any, index: any) => {
                 return (
                   <CardList
-                    disabled
                     key={index}
                     data={item}
                     handlePress={() => {}}

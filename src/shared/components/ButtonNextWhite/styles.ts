@@ -1,7 +1,6 @@
-import { DefaultTheme } from "styled-components";
-import styled from "styled-components/native";
+import styled, { DefaultTheme } from "styled-components/native";
 
-export const Container = styled.TouchableOpacity<{ disable: boolean }>`
+export const Container = styled.Pressable<{ disable: boolean }>`
   background: ${(props: { theme: DefaultTheme }) => props.theme.colors.white};
   width: ${(props: { theme: DefaultTheme }) => props.theme.spacing.full}%;
   height: 48px;

@@ -1,12 +1,14 @@
 import React from "react";
 import { ScrollView } from "react-native";
 
-import * as S from "./styles";
-import { ButtonNext } from "../../shared/components/ButtonNext";
-import HeaderAuth from "../../shared/components/HeaderAuth";
-import { Spinner } from "../../shared/components/Spinner";
-import { ServiceWithCheckboxFullService } from "../../shared/components/ServiceWithCheckboxFullService";
+import { ButtonNext } from "@components/ButtonNext";
+import HeaderAuth from "@components/HeaderAuth";
+import { Spinner } from "@components/Spinner";
+import { ServiceWithCheckboxFullService } from "./components/ServiceWithCheckboxFullService";
+import ModalCep from "@components/ModalCep";
 import FullServicesHook from "./FullServicesHook";
+import * as S from "./styles";
+import ListCategories from "@components/ListCategories";
 
 const FullServices = () => {
   const {
@@ -14,14 +16,17 @@ const FullServices = () => {
     navigation,
     categoryList,
     activeItem,
-    setLoadingImages,
-    loadingImages,
     ativo,
     services,
     handleRecommendation,
     handleSelectService,
     listSelections,
     mutateGetCompanyLoading,
+    cep,
+    setCep,
+    updateState,
+    stateModal,
+    nextScreen,
   } = FullServicesHook();
 
   if (isLoading || mutateGetCompanyLoading) {
@@ -37,31 +42,11 @@ const FullServices = () => {
         />
         <S.Wrapper>
           <S.WrapperList>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {categoryList.length > 0 &&
-                categoryList.map((item) => {
-                  const isActive = ativo === item.nome;
-                  return (
-                    <S.CardContainer
-                      key={item.nome}
-                      onPress={() => activeItem(item)}
-                    >
-                      <S.CardContainerIcon isActive={isActive}>
-                        <S.CardIcon
-                          onLoadEnd={() => setLoadingImages(false)}
-                          source={{
-                            uri: isActive ? item.icon_white : item.icon_gray,
-                          }}
-                        />
-                        {loadingImages && <Spinner />}
-                      </S.CardContainerIcon>
-                      <S.TitleCardCategoria isActive={isActive}>
-                        {item.nome}
-                      </S.TitleCardCategoria>
-                    </S.CardContainer>
-                  );
-                })}
-            </ScrollView>
+            <ListCategories
+              categoryList={categoryList}
+              activeItem={activeItem}
+              active={ativo}
+            />
           </S.WrapperList>
           <S.WrapperListServices>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -87,6 +72,13 @@ const FullServices = () => {
           />
         </S.Wrapper>
       </S.Container>
+      <ModalCep
+        updateState={updateState}
+        nextScreen={nextScreen}
+        cep={cep}
+        setCep={setCep}
+        stateModal={stateModal}
+      />
     </S.Background>
   );
 };

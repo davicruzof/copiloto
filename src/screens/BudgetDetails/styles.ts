@@ -91,7 +91,7 @@ export const ButtonChatTex = styled.Text`
   margin-left: 8px;
 `;
 
-export const ButtonChat = styled.TouchableOpacity`
+export const ButtonChat = styled.Pressable`
   height: 47px;
   background-color: #fff;
   border: 1px solid #e1eaf1;

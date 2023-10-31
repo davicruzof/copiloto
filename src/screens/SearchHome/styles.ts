@@ -7,7 +7,7 @@ export const Container = styled.SafeAreaView.attrs({
 })`
   background-color: ${({ theme }: { theme: DefaultTheme }) =>
     theme.colors.white};
-    padding-top: 40px;
+  padding-top: 40px;
 `;
 
 export const Wrapper = styled.View`
@@ -17,7 +17,7 @@ export const Wrapper = styled.View`
     theme.colors.white};
 `;
 
-export const Search = styled.TouchableOpacity`
+export const Search = styled.Pressable`
   height: 48px;
   width: 100%;
   border-radius: 45px;
@@ -30,7 +30,7 @@ export const Search = styled.TouchableOpacity`
   padding: ${({ theme }: { theme: DefaultTheme }) => theme.spacing.small}px;
 `;
 
-export const ButtonList = styled.TouchableOpacity`
+export const ButtonList = styled.Pressable`
   height: 48px;
   width: 100%;
   background-color: ${({ theme }: { theme: DefaultTheme }) =>

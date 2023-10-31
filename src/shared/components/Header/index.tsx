@@ -1,20 +1,28 @@
 import React from "react";
-import { Container, Title, ButtonBack } from "./styles";
-import icon from "../../../assets/arrow.png";
 import { Image, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import { MaterialIcons } from "@expo/vector-icons";
+import * as S from "./styles";
+import theme from "@utils/theme";
 
-const Header = ({ handlePressHeader, title }) => {
+const Header: React.FC<{
+  handlePressHeader: () => void;
+  title: string;
+}> = ({ handlePressHeader, title }) => {
   return (
-    <View style={{ paddingTop: 16, backgroundColor: "#fff" }}>
-      <StatusBar translucent={true} />
-      <Container>
-        <ButtonBack onPress={handlePressHeader}>
-          <Image source={icon} />
-        </ButtonBack>
-        <Title>{title}</Title>
-      </Container>
-    </View>
+    <S.Container>
+      <StatusBar translucent backgroundColor="transparent" />
+      <S.Wrapper>
+        <S.ButtonBack onPress={handlePressHeader}>
+          <MaterialIcons
+            name="keyboard-arrow-left"
+            size={32}
+            color={theme.colors.primary}
+          />
+        </S.ButtonBack>
+        <S.Title>{title}</S.Title>
+      </S.Wrapper>
+    </S.Container>
   );
 };
 

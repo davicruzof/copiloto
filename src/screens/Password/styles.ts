@@ -1,15 +1,21 @@
-import { KeyboardAvoidingView } from "react-native";
-import styled from "styled-components/native";
+import { Dimensions } from "react-native";
+import styled, { DefaultTheme } from "styled-components/native";
+
+const { height } = Dimensions.get("screen");
+
+const sub = height * 0.3;
 
 export const Container = styled.SafeAreaView.attrs({
   flex: 1,
-})``;
+})`
+  background-color: #e1eaf1;
+`;
 
 export const Wrapper = styled.View`
-  padding: 16px;
   flex: 1;
-  justify-content: space-between;
-  background-color: #e1eaf1;
+  padding: 0 ${({ theme }: { theme: DefaultTheme }) => theme.spacing.medium}px;
+  background-color: ${({ theme }: { theme: DefaultTheme }) =>
+    theme.colors.white};
 `;
 
 export const Title = styled.Text`
@@ -41,4 +47,11 @@ export const TextInfo = styled.Text`
   color: ${(props) => (props.active ? "#2C94F4" : "#002547")};
   margin-top: 12px;
   text-decoration: ${(props) => (props.active ? "line-through" : "none")};
+`;
+
+export const ContainerButton = styled.View`
+  position: absolute;
+  left: ${({ theme }: { theme: DefaultTheme }) => theme.spacing.medium}px;
+  width: ${({ theme }: { theme: DefaultTheme }) => theme.spacing.full}%;
+  margin-top: ${height - sub}px;
 `;
