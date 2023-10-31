@@ -3,9 +3,8 @@ import { Image, StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import bg from "@assets/bg.png";
 import logo from "@assets/logo.png";
-import { Button } from "@components/Button";
-import { ButtonLigth } from "@components/ButtonLigth";
 import * as S from "./styles";
+import { Button } from "@components/Button";
 
 function Start() {
   const navigation = useNavigation<any>();
@@ -22,9 +21,10 @@ function Start() {
         <Image source={logo} />
         <S.Slogan>Tudo que seu veículo precisa está aqui!</S.Slogan>
         <S.ContainerButtons>
-          <Button text="Entrar" onPress={() => handleScreen("SignIn")} />
-          <ButtonLigth
+          <Button type="primary" text="Entrar" onPress={() => handleScreen("SignIn")} />
+          <Button
             text="Cadastrar"
+            type="secondary"
             onPress={() => handleScreen("Register")}
           />
         </S.ContainerButtons>

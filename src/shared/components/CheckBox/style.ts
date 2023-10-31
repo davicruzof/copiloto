@@ -1,5 +1,4 @@
-import { DefaultTheme } from "styled-components";
-import styled from "styled-components/native";
+import styled, { DefaultTheme } from "styled-components/native";
 
 export const Container = styled.Pressable`
   flex-direction: row;
@@ -8,7 +7,6 @@ export const Container = styled.Pressable`
 export const ContainerRadius = styled.View<{ selected: boolean }>`
   height: 24px;
   width: 24px;
-  padding: 4px;
   border-width: 2px;
   border-radius: 4px;
   background-color: ${({ selected, theme }) =>

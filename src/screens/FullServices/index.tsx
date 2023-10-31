@@ -1,7 +1,6 @@
 import React from "react";
 import { ScrollView } from "react-native";
 
-import { ButtonNext } from "@components/ButtonNext";
 import HeaderAuth from "@components/HeaderAuth";
 import { Spinner } from "@components/Spinner";
 import { ServiceWithCheckboxFullService } from "./components/ServiceWithCheckboxFullService";
@@ -9,6 +8,7 @@ import ModalCep from "@components/ModalCep";
 import FullServicesHook from "./FullServicesHook";
 import * as S from "./styles";
 import ListCategories from "@components/ListCategories";
+import { Button } from "@components/Button";
 
 const FullServices = () => {
   const {
@@ -64,7 +64,9 @@ const FullServices = () => {
                 })}
             </ScrollView>
           </S.WrapperListServices>
-          <ButtonNext
+          <Button
+            type="primary"
+            isIcon
             text="Confirmar dados"
             onPress={handleRecommendation}
             disable={listSelections.length === 0}

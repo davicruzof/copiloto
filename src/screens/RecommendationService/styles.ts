@@ -58,7 +58,7 @@ export const Checkbox = styled.View<{ active: boolean }>`
 
 export const ButtonsContainer = styled.View`
   position: absolute;
-  bottom: 20px;
+  bottom: 60px;
   left: 20px;
   right: 20px;
   height: 110px;

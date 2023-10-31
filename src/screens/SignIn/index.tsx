@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "@components/Button";
 import Header from "@components/Header";
 import Input from "@components/Input/Input";
 import { Spinner } from "@components/Spinner";
@@ -7,6 +6,7 @@ import TextDanger from "@components/TextDanger";
 import ButtonOutLineNext from "@components/ButtonOutLineNext";
 import SignInModelView from "./SignInModelView";
 import * as S from "./styles";
+import { Button } from "@components/Button";
 
 const SignIn = () => {
   const {
@@ -60,7 +60,7 @@ const SignIn = () => {
         {error && <TextDanger text="Email ou senha invalido" />}
 
         <S.ContainerButton testID="entrar">
-          <Button text="Entrar" onPress={handleSignIn} />
+          <Button isIcon type="primary" text="Entrar" onPress={handleSignIn} />
         </S.ContainerButton>
       </S.Wrapper>
     </S.Container>

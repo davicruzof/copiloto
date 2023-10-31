@@ -1,22 +1,44 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import styled, { DefaultTheme } from "styled-components/native";
+import { ButtonType } from "./types";
 
-export const Container = styled.Pressable<{ disable: boolean }>`
-  background: ${(props: { theme: DefaultTheme }) => props.theme.colors.primary};
+export const Container = styled.Pressable<{
+  disable?: boolean;
+  isIcon?: boolean;
+  type: ButtonType;
+}>`
+  background: ${({ theme, type }: { theme: DefaultTheme; type: ButtonType }) =>
+    type === "primary" ? theme.colors.primary : theme.colors.text.slogan};
   width: ${(props: { theme: DefaultTheme }) => props.theme.spacing.full}%;
-  min-height: 48px;
   align-items: center;
   display: flex;
   flex-direction: row;
-  padding: 8px 16px;
-  justify-content: center;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border: ${({ type }: { type: ButtonType }) =>
+      type === "secondary" ? 1 : 0}px
+    solid #e1eaf1;
+  justify-content: ${({ isIcon }: { isIcon: boolean }) =>
+    isIcon ? "space-between" : "center"};
   border-radius: ${(props: { theme: DefaultTheme }) =>
     props.theme.spacing.xxsmall}px;
-  opacity: ${({ disable }) => (disable ? 0.6 : 1)};
+  opacity: ${({ disable }: { disable: boolean }) => (disable ? 0.6 : 1)};
 `;
 
-export const TextButton = styled.Text`
-  color: ${(props: { theme: DefaultTheme }) => props.theme.colors.white};
+export const TextButton = styled.Text<{
+  type: ButtonType;
+}>`
+  color: ${({ theme, type }: { theme: DefaultTheme; type: ButtonType }) =>
+    type === "primary" ? theme.colors.white : theme.colors.primary};
   font-family: Jost_600SemiBold;
   font-size: ${(props: { theme: DefaultTheme }) =>
-    props.theme.fontSizes.small}px;
+    props.theme.fontSizes.medium}px;
+`;
+
+export const IconArrow = styled(MaterialIcons).attrs({
+  name: "keyboard-arrow-right",
+  size: 24,
+})`
+  color: ${({ theme, type }: { theme: DefaultTheme; type: ButtonType }) =>
+    type === "primary" ? theme.colors.white : theme.colors.primary};
 `;

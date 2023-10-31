@@ -4,14 +4,13 @@ import { Alert, View } from "react-native";
 import * as S from "./styles";
 
 import { ButtonLigthDanger } from "@components/ButtonLigthDanger";
-import { ButtonLigthNext } from "@components/ButtonLigthNext";
 import { BottomSheet } from "react-native-btr";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { ButtonNext } from "@components/ButtonNext";
 import { OrcamentoContext } from "@contexts/orcamento";
 import { useNavigation } from "@react-navigation/native";
+import { Button } from "@components/Button";
 
 export const BottomSheetOffice: React.FC<{
   visible: boolean;
@@ -19,13 +18,7 @@ export const BottomSheetOffice: React.FC<{
   data: any;
   type: string;
   setTabActive: () => void;
-}> = ({
-  visible,
-  setVisible,
-  data,
-  type,
-  setTabActive,
-}) => {
+}> = ({ visible, setVisible, data, type, setTabActive }) => {
   const navigation = useNavigation<any>();
   const { bottom } = useSafeAreaInsets();
 
@@ -80,13 +73,17 @@ export const BottomSheetOffice: React.FC<{
           </View>
         </S.Header>
         <S.DividerLine />
-        <ButtonNext
+        <Button
+          type="primary"
+          isIcon
           text={type === "add" ? "Incluir para orçamento" : "Agendar agora"}
           onPress={type === "add" ? handleAddService : sendNewOrcamento}
           disable={false}
         />
         {type !== "add" && (
-          <ButtonLigthNext
+          <Button
+            type="secondary"
+            isIcon
             text="Solicitar orçamento"
             onPress={handleAddService}
           />

@@ -5,12 +5,11 @@ import * as S from "./styles";
 import { ServiceWithCheckbox } from "@components/ServiceWithCheckbox";
 import HeaderAuth from "@components/HeaderAuth";
 import { ScrollView } from "react-native";
-import { ButtonNext } from "@components/ButtonNext";
-import { ButtonNextWhite } from "@components/ButtonNextWhite";
 import { Spinner } from "@components/Spinner";
 import RecommendationServiceModal from "./modal";
 import RecommendationServiceHook from "./RecomendationHook";
 import ModalCep from "@components/ModalCep";
+import { Button } from "@components/Button";
 
 const RecommendationService = () => {
   const {
@@ -66,22 +65,20 @@ const RecommendationService = () => {
             </ScrollView>
           </S.WrapperListServices>
           <S.ButtonsContainer>
-            {mutateGetCompanyLoading ? (
-              <Spinner />
-            ) : (
-              <>
-                <ButtonNext
-                  onPress={handleNextScreen}
-                  text="Incluir serviços recomenados"
-                  disable={listSelections.length === 0}
-                  disabled={listSelections.length === 0}
-                />
-                <ButtonNextWhite
-                  onPress={handleNextScreenEmpty}
-                  text="Não obrigado!"
-                />
-              </>
-            )}
+            <Button
+              isIcon
+              type="primary"
+              onPress={handleNextScreen}
+              text="Incluir serviços recomenados"
+              disable={listSelections.length === 0}
+              disabled={listSelections.length === 0}
+            />
+            <Button
+              type="secondary"
+              isIcon
+              onPress={handleNextScreenEmpty}
+              text="Não obrigado!"
+            />
           </S.ButtonsContainer>
         </S.Wrapper>
       </S.Container>

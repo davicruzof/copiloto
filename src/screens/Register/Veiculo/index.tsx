@@ -1,15 +1,14 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { getBrands, getModels } from "../../../services/fipe";
-import { ButtonNext } from "../../../shared/components/ButtonNext";
-import { Drop } from "../../../shared/components/Drop";
-import Header from "../../../shared/components/Header";
-import Input from "../../../shared/components/Input/Input";
-import { Spinner } from "../../../shared/components/Spinner";
+import { Drop } from "@components/Drop";
+import Header from "@components/Header";
+import Input from "@components/Input/Input";
+import { Spinner } from "@components/Spinner";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ButtonLigth } from "../../../shared/components/ButtonLigth";
 import React, { useState } from "react";
 import ModalShow from "./components/ModalShow/Modal";
 import * as S from "./style";
+import { Button } from "@components/Button";
 
 const RegisterVehicle = () => {
   const navigation = useNavigation<any>();
@@ -232,14 +231,17 @@ const RegisterVehicle = () => {
         />
 
         <S.ContainerButton>
-          <ButtonNext
+          <Button
+            isIcon
+            type="primary"
             text="Próximo"
             onPress={sendData}
             disable={valid}
             disabled={valid}
           />
           <S.Separet />
-          <ButtonLigth
+          <Button
+            type="secondary"
             text="Pular"
             onPress={() => navigation.navigate("CreatePassword", { idUser })}
           />

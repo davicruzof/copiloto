@@ -1,23 +1,11 @@
 import React, { useContext } from "react";
-import {
-  ActionPerfil,
-  Button,
-  Button2,
-  Container,
-  ContainerActions,
-  ContainerAvatar,
-  ICon,
-  Icone,
-  Name,
-  TextAction,
-  TextEditFoto,
-  TextLogout,
-} from "./styles";
 import { StatusBar } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import icon3 from "../../assets/arrow2.png";
-import { UserContext } from "../../contexts/userContext";
+import { MaterialIcons } from "@expo/vector-icons";
+import { UserContext } from "@contexts/userContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import theme from "@utils/theme";
+import * as S from "./styles";
 
 export default function Profile() {
   const {
@@ -30,36 +18,39 @@ export default function Profile() {
     setUser(null);
   };
 
-  return (
-    <Container>
-      <StatusBar translucent={true} />
-      <ContainerAvatar>
-        <ICon>
-          <AntDesign name="user" size={50} color="black" />
-        </ICon>
-        <Name>{user.nome}</Name>
-        <Button>
-          <TextEditFoto>Trocar a foto</TextEditFoto>
-        </Button>
-      </ContainerAvatar>
-      <ContainerActions>
-        <ActionPerfil>
-          <TextAction>Meus dados</TextAction>
-          <Icone source={icon3} />
-        </ActionPerfil>
-        <ActionPerfil>
-          <TextAction>Dados de revenda</TextAction>
-          <Icone source={icon3} />
-        </ActionPerfil>
-        <ActionPerfil>
-          <TextAction>Termos de uso</TextAction>
-          <Icone source={icon3} />
-        </ActionPerfil>
-      </ContainerActions>
+  const ItemMenu = ({ text }: { text: string }) => {
+    return (
+      <S.ActionPerfil>
+        <S.TextAction>{text}</S.TextAction>
+        <MaterialIcons
+          name="keyboard-arrow-right"
+          size={24}
+          color={theme.colors.primary}
+        />
+      </S.ActionPerfil>
+    );
+  };
 
-      <Button2 onPress={logout}>
-        <TextLogout>Sair do aplicativo</TextLogout>
-      </Button2>
-    </Container>
+  return (
+    <S.Container>
+      <StatusBar translucent={true} />
+      <S.ContainerAvatar>
+        <S.ICon>
+          <AntDesign name="user" size={50} color="black" />
+        </S.ICon>
+        <S.Name>{user.nome}</S.Name>
+        <S.Button>
+          <S.TextEditFoto>Trocar a foto</S.TextEditFoto>
+        </S.Button>
+      </S.ContainerAvatar>
+      <S.ContainerActions>
+        <ItemMenu text="Meus dados" />
+        <ItemMenu text="Termos de uso" />
+        <ItemMenu text="Meus dados" />
+      </S.ContainerActions>
+      <S.Button2 onPress={logout}>
+        <S.TextLogout>Sair do aplicativo</S.TextLogout>
+      </S.Button2>
+    </S.Container>
   );
 }

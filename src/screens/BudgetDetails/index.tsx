@@ -4,10 +4,9 @@ import * as S from "./styles";
 import HeaderAuth from "@components/HeaderAuth";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
-import { Button } from "@components/Button";
-import { ButtonLigth } from "@components/ButtonLigth";
 import { TimeLine } from "./TimeLine";
 import { Fragment } from "react";
+import { Button } from "@components/Button";
 
 export function BudgetDetails() {
   const navigation = useNavigation();
@@ -104,8 +103,8 @@ export function BudgetDetails() {
 
           {data.status !== "accept" && (
             <S.ButtonWrapper>
-              <Button text="Aceitar proposta" />
-              <ButtonLigth isBorder={true} text="Descartar" />
+              <Button type="primary" text="Aceitar proposta" />
+              <Button type="secondary" text="Descartar" />
             </S.ButtonWrapper>
           )}
         </ScrollView>

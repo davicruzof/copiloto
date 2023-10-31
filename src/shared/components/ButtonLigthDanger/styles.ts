@@ -2,13 +2,13 @@ import styled, { DefaultTheme } from "styled-components/native";
 
 export const Container = styled.Pressable`
   width: ${(props: { theme: DefaultTheme }) => props.theme.spacing.full}%;
-  height: 48px;
+  padding: 16px;
   align-items: center;
   display: flex;
   justify-content: center;
   border-radius: ${(props: { theme: DefaultTheme }) =>
     props.theme.spacing.xxsmall}px;
-  margin-top: 32px;
+  margin: 8px 0;
 `;
 
 export const TextButton = styled.Text`

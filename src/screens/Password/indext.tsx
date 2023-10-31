@@ -3,10 +3,10 @@ import { View } from "react-native";
 import Input from "@components/Input/Input";
 import Header from "@components/Header";
 import { Spinner } from "@components/Spinner";
-import { ButtonNext } from "@components/ButtonNext";
 import PasswordViewModel from "./PasswordViewModel";
 import { isCharSpecial, isEightChars, isUpperCase } from "./util";
 import * as S from "./styles";
+import { Button } from "@components/Button";
 
 export const Password = () => {
   const {
@@ -67,7 +67,9 @@ export const Password = () => {
         </View>
 
         <S.ContainerButton>
-          <ButtonNext
+          <Button
+            isIcon
+            type="primary"
             text="Próximo"
             onPress={update_password}
             disable={!valid}

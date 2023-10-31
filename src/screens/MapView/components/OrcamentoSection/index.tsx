@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
-import { Alert, ScrollView, View } from "react-native";
+import { Alert, ScrollView } from "react-native";
 
 import { CardList } from "../CardList";
-import { ButtonNext } from "@components/ButtonNext";
 import { ButtonLigthDanger } from "@components/ButtonLigthDanger";
 import { CardService } from "../CardService";
 import { OrcamentoContext } from "@contexts/orcamento";
 import { useNavigation } from "@react-navigation/native";
 import * as S from "./styles";
+import { Button } from "@components/Button";
 
 export const OrcamentoSection = ({ setTabActive, setTypeBottomSheet }: any) => {
   const navigation = useNavigation<any>();
@@ -71,7 +71,7 @@ export const OrcamentoSection = ({ setTabActive, setTypeBottomSheet }: any) => {
           Você pode escolher até 3 oficinas diferentes para cotação online!
         </S.Title>
 
-        <View style={{ marginBottom: 32 }}>
+        <S.WrapperOptions>
           {orcamento
             ? orcamentoSize > 0 &&
               orcamento.map((item: any, index: any) => {
@@ -85,9 +85,11 @@ export const OrcamentoSection = ({ setTabActive, setTypeBottomSheet }: any) => {
               })
             : emptyService(3)}
           {orcamentoSize > 0 && emptyService(3 - orcamentoSize)}
-        </View>
+        </S.WrapperOptions>
 
-        <ButtonNext
+        <Button
+          type="primary"
+          isIcon
           onPress={sendNewOrcamento}
           text={selectedValues}
           disable={orcamentoSize === 0}

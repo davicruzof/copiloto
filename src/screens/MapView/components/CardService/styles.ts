@@ -1,16 +1,6 @@
 import styled from "styled-components/native";
 
-export const Container = styled.Pressable.attrs({
-  shadowColor: "#202020",
-  shadowOffset: {
-    width: 0,
-    height: 4,
-  },
-  shadowOpacity: 0.6,
-  shadowRadius: 20,
-
-  elevation: 6,
-})`
+export const Container = styled.Pressable`
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
@@ -19,6 +9,8 @@ export const Container = styled.Pressable.attrs({
   padding: 16px;
   min-height: 86px;
   border-radius: 13px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(32, 32, 32, 0.03);
 `;
 
 export const Title = styled.Text<{ isActive: boolean }>`

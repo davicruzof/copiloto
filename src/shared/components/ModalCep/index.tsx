@@ -2,9 +2,8 @@ import React from "react";
 import { Linking, Modal, Text } from "react-native";
 
 import * as S from "./styles";
-import { Button } from "../Button";
 import Input from "../Input/Input";
-import { ButtonNext } from "../ButtonNext";
+import { Button } from "@components/Button";
 
 const ModalCep = ({
   stateModal,
@@ -51,7 +50,9 @@ const ModalCep = ({
             }
           />
           <S.Divider />
-          <ButtonNext
+          <Button
+            type="primary"
+            isIcon
             text="Próximo"
             onPress={nextScreen}
             disabled={cep.length < 8}
@@ -59,6 +60,7 @@ const ModalCep = ({
           />
           <S.Divider />
           <Button
+            type="primary"
             text="Permitir acesso a localização"
             onPress={handleOpenSettings}
           />

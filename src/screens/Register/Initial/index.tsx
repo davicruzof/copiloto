@@ -1,7 +1,6 @@
 import React from "react";
 import { ScrollView, Pressable } from "react-native";
 
-import { ButtonNext } from "@components/ButtonNext";
 import Header from "@components/Header";
 import Input from "@components/Input/Input";
 import CheckBox from "@components/CheckBox";
@@ -11,6 +10,7 @@ import BottomSheetCustom from "../components/BottomSheetTerms";
 import { SexoSelect } from "../components/SexoSelect";
 import useFirstFormSignup from "./useFirstFormSignup";
 import * as S from "./styles";
+import { Button } from "@components/Button";
 
 const Initial = () => {
   const {
@@ -101,8 +101,10 @@ const Initial = () => {
             </S.CheckBoxContainerText>
           </S.CheckGroup>
 
-          <ButtonNext
+          <Button
             text="Próximo"
+            type="primary"
+            isIcon
             onPress={sendData}
             disabled={!valid}
             disable={!valid}

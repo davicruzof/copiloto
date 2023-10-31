@@ -9,17 +9,15 @@ const SwitchView = ({ active, setActive, mapPermission }: any) => {
   const { top } = useSafeAreaInsets();
   return (
     <S.Container top={top}>
-      <Pressable
-        disabled={!mapPermission}
-        onPress={() => setActive("map")}
-        style={{ marginRight: 30 }}
-      >
-        <MaterialCommunityIcons
-          name="map-marker-multiple"
-          size={24}
-          color={active === "map" ? "#2c94f4" : "#AEBECC"}
-        />
-      </Pressable>
+      {mapPermission && (
+        <Pressable onPress={() => setActive("map")} style={{ marginRight: 30 }}>
+          <MaterialCommunityIcons
+            name="map-marker-multiple"
+            size={24}
+            color={active === "map" ? "#2c94f4" : "#AEBECC"}
+          />
+        </Pressable>
+      )}
       <Pressable onPress={() => setActive("list")}>
         <Entypo
           name="list"

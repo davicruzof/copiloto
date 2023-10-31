@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { Keyboard } from "react-native";
 import * as S from "./styles";
-import TextDanger from "../../../shared/components/TextDanger";
-import Header from "../../../shared/components/Header";
-import { ButtonNext } from "../../../shared/components/ButtonNext";
-import ButtonOutLineNext from "../../../shared/components/ButtonOutLineNext";
-import { CodeFieldCustom } from "../../../shared/components/CodeFieldCustom";
+import TextDanger from "@components/TextDanger";
+import Header from "@components/Header";
+import ButtonOutLineNext from "@components/ButtonOutLineNext";
+import { CodeFieldCustom } from "@components/CodeFieldCustom";
 import { useNavigation } from "@react-navigation/native";
+import { Button } from "@components/Button";
 
 export const Validation = ({
   title,
@@ -50,8 +50,10 @@ export const Validation = ({
         {error && <TextDanger text={error} />}
 
         <S.ContainerButton>
-          <ButtonNext
+          <Button
             text="Próximo"
+            type="primary"
+            isIcon
             onPress={handleSendCode}
             disable={disable}
             disabled={disable}

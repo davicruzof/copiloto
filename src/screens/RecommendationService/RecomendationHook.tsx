@@ -1,7 +1,12 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ServiceRecommendResponse } from "@services/user/types";
 import hookPermissionLocation from "@hooks/permissionLocation";
+import { ServicesMapContext } from "@contexts/servicesMap";
+import { getCompanyServices } from "@services/company/company";
+import { Companys, ServicesCompany } from "@services/company/types";
+import { Alert } from "react-native";
+import { useMutation } from "@tanstack/react-query";
 
 const RecommendationServiceHook = () => {
   const navigation = useNavigation<any>();
@@ -14,17 +19,7 @@ const RecommendationServiceHook = () => {
   };
   const [stateModal, setStateModal] = useState(false);
 
-  const {
-    requestPermission,
-    mutateGetCompanyLoading,
-    mutateGetServicesCompany,
-  } = hookPermissionLocation();
-
-  useEffect(() => {
-    let arrayAux: string[] = [];
-    recommendServices.map((item) => arrayAux.push(item.recomended_id_service));
-    setListSelections(arrayAux);
-  }, []);
+  const { requestPermission, getPosition } = hookPermissionLocation();
 
   const [modalAttributes, setModalAttributes] = useState<{
     title: string;
@@ -36,6 +31,30 @@ const RecommendationServiceHook = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
 
+  const { setServicesMap } = useContext(ServicesMapContext);
+  const [position, setPosition] = useState<{
+    latitude: string;
+    longitude: string;
+  } | null>(null);
+
+  const {
+    mutate: mutateGetServicesCompany,
+    isLoading: mutateGetCompanyLoading,
+  } = useMutation({
+    mutationFn: (servicesIds: Companys) => getCompanyServices(servicesIds),
+    onSuccess: (data: ServicesCompany[]) => {
+      if (data.length > 0) {
+        setServicesMap(data);
+        navigation.navigate("MapView", { coordinates: position });
+      } else {
+        Alert.alert(
+          "Copiloto",
+          "Nenhum dado foi encontrado na api para listar oficinas"
+        );
+      }
+    },
+  });
+
   const handleSelectService = (service: ServiceRecommendResponse) => {
     if (listSelections.includes(service.recomended_id_service)) {
       const auxServices: string[] = [];
@@ -44,7 +63,7 @@ const RecommendationServiceHook = () => {
       });
       setListSelections(auxServices);
     } else {
-      setListSelections(old => [...old, service.recomended_id_service]);
+      setListSelections((old) => [...old, service.recomended_id_service]);
     }
   };
 
@@ -71,10 +90,14 @@ const RecommendationServiceHook = () => {
   const getCompanys = async () => {
     const permission = await requestPermission();
 
-    if (permission?.coordenadas) {
+    if (permission === "granted") {
+      const position = await getPosition();
+
+      setPosition(position.coordenadas);
+
       mutateGetServicesCompany({
-        services: [...services, ...listSelections],
-        coordenadas: permission.coordenadas,
+        services: listSelections,
+        coordenadas: position.coordenadas,
       });
     } else {
       updateState();
@@ -88,6 +111,12 @@ const RecommendationServiceHook = () => {
   const handleNextScreenEmpty = async () => {
     getCompanys();
   };
+
+  useEffect(() => {
+    let arrayAux: string[] = [];
+    recommendServices.map((item) => arrayAux.push(item.recomended_id_service));
+    setListSelections(arrayAux);
+  }, []);
 
   return {
     listSelections,

@@ -2,10 +2,10 @@ import React from "react";
 import { Keyboard } from "react-native";
 import Input from "@components/Input/Input";
 import Header from "@components/Header";
-import { ButtonNext } from "@components/ButtonNext";
 import { Spinner } from "@components/Spinner";
 import * as S from "./styles";
 import RecoveryFirstViewModel from "./RecoveryFirstViewModel";
+import { Button } from "@components/Button";
 
 const RecoveryFirst = () => {
    const {
@@ -42,11 +42,11 @@ const RecoveryFirst = () => {
         />
 
         <S.ContainerButton>
-          <ButtonNext
+          <Button
             text="Próximo"
+            type="primary"
+            isIcon
             onPress={recovery}
-            disable={false}
-            disabled={false}
           />
         </S.ContainerButton>
       </S.Wrapper>

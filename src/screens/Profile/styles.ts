@@ -37,6 +37,7 @@ export const Name = styled.Text`
 `;
 
 export const Button = styled.Pressable``;
+
 export const Button2 = styled.Pressable`
   position: absolute;
   bottom: 40px;

@@ -14,3 +14,8 @@ export const Title = styled.Text`
   text-align: center;
   margin-bottom: 22px;
 `;
+
+export const WrapperOptions = styled.View`
+  background-color: transparent;
+  margin-bottom: 32px;
+`;

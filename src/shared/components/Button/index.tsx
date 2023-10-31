@@ -1,16 +1,13 @@
 import React from "react";
 
 import * as S from "./styles";
-import { TouchableOpacityProps } from "react-native";
+import { ButtonProps } from "./types";
 
-interface ButtonProps extends TouchableOpacityProps {
-  text: string;
-}
-
-export function Button({ text, ...rest }: ButtonProps) {
+export function Button({ text, disable,type, isIcon, ...rest }: ButtonProps) {
   return (
-    <S.Container {...rest}>
-      <S.TextButton>{text}</S.TextButton>
+    <S.Container {...rest} disable={disable} isIcon={isIcon} type={type} >
+      <S.TextButton type={type} >{text}</S.TextButton>
+      {isIcon && <S.IconArrow type={type} />}
     </S.Container>
   );
 }

@@ -24,6 +24,7 @@ const RecommendationServiceModal = ({
           <S.TitleModal>{title}</S.TitleModal>
           <S.ContentModal>{content}</S.ContentModal>
           <Button
+            type="primary"
             text="Ok, entendi!"
             onPress={() => {
               setModalVisible(!modalVisible);

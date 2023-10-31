@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useMutation } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import {
   CategoryResponse,
@@ -9,6 +9,9 @@ import {
 } from "@services/user/types";
 import { getServicesRecommended } from "@services/user/user";
 import hookPermissionLocation from "@hooks/permissionLocation";
+import { ServicesMapContext } from "@contexts/servicesMap";
+import { Companys, ServicesCompany } from "@services/company/types";
+import { getCompanyServices } from "@services/company/company";
 
 const FullServicesHook = () => {
   const route = useRoute();
@@ -25,12 +28,13 @@ const FullServicesHook = () => {
   const [services, setServices] = useState<ServiceResponse[]>([]);
   const [cep, setCep] = useState("");
   const [stateModal, setStateModal] = useState(false);
+  const { setServicesMap } = useContext(ServicesMapContext);
+  const [position, setPosition] = useState<{
+    latitude: string;
+    longitude: string;
+  } | null>(null);
 
-  const {
-    mutateGetCompanyLoading,
-    requestPermission,
-    mutateGetServicesCompany,
-  } = hookPermissionLocation();
+  const { getPosition, requestPermission } = hookPermissionLocation();
 
   const { mutate: mutateGetServicesRecommended, isLoading } = useMutation({
     mutationFn: (servicesIds: string[]) => getServicesRecommended(servicesIds),
@@ -53,10 +57,27 @@ const FullServicesHook = () => {
     },
   });
 
+  const {
+    mutate: mutateGetServicesCompany,
+    isLoading: mutateGetCompanyLoading,
+  } = useMutation({
+    mutationFn: (servicesIds: Companys) => getCompanyServices(servicesIds),
+    onSuccess: (data: ServicesCompany[]) => {
+      if (data.length > 0) {
+        setServicesMap(data);
+        navigation.navigate("MapView", {coordinates: position});
+      } else {
+        Alert.alert(
+          "Copiloto",
+          "Nenhum dado foi encontrado na api para listar oficinas"
+        );
+      }
+    },
+  });
+
   const updateState = () => {
     setStateModal(!stateModal);
   };
-
 
   const nextScreen = () => {
     updateState();
@@ -69,10 +90,14 @@ const FullServicesHook = () => {
   const getCompanys = async () => {
     const permission = await requestPermission();
 
-    if (permission?.coordenadas) {
+    if (permission === "granted") {
+      const position = await getPosition();
+
+      setPosition(position.coordenadas);
+
       mutateGetServicesCompany({
         services: listSelections,
-        coordenadas: permission.coordenadas,
+        coordenadas: position.coordenadas,
       });
     } else {
       updateState();

@@ -1,25 +1,9 @@
 import { useState } from "react";
-import {
-  useFonts,
-  Jost_400Regular,
-  Jost_500Medium,
-  Jost_600SemiBold,
-  Jost_700Bold,
-  Jost_300Light,
-} from "@expo-google-fonts/jost";
+
 import { QueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
-
 const AppModelView = () => {
-  const [fontLoading] = useFonts({
-    Jost_300Light,
-    Jost_400Regular,
-    Jost_500Medium,
-    Jost_700Bold,
-    Jost_600SemiBold,
-  });
-
   const [user, setUser] = useState(null);
   const [orcamento, setOrcamento] = useState(null);
   const [servicesMap, setServicesMap] = useState(null);
@@ -41,7 +25,6 @@ const AppModelView = () => {
 
   return {
     queryClient,
-    fontLoading,
     user,
     setUser,
     orcamento,
