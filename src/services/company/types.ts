@@ -7,6 +7,7 @@ export interface ServicesCompany {
   latitude: string;
   longitude: string;
   id_company: string;
+  company_image: string;
   services_details: Servicesdetail[];
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Image, View } from "react-native";
 
 import * as S from "./styles";
 
@@ -11,15 +11,18 @@ export const CardList: React.FC<{
   data: ServicesCompany;
   handlePress: () => void;
 }> = ({ data, handlePress, ...rest }) => {
-
   return (
     <S.Container onPress={handlePress} {...rest}>
-      <View
+      <Image
+        source={{
+          uri: data.company_image,
+        }}
         style={{
           width: 64,
           height: 59.12,
           borderRadius: 5.42373,
-          backgroundColor: "#c4c4c4",
+          borderColor: "#c4c4c4",
+          borderWidth: 1,
           marginRight: 16,
         }}
       />
@@ -31,7 +34,9 @@ export const CardList: React.FC<{
         <S.LocationContainer>
           <S.InfoContainer>
             <FontAwesome5 name="map-marker-alt" size={16} color="#2C94F4" />
-            <S.TextInfo>{data.distance} metros distante</S.TextInfo>
+            <S.TextInfo>
+              {parseFloat(data.distance).toFixed(2)}m distante
+            </S.TextInfo>
           </S.InfoContainer>
           {Boolean(data.isHouse) && (
             <S.InfoContainer>

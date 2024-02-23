@@ -1,11 +1,11 @@
 import { AxiosError } from "axios";
 import { api } from "../api";
-import { CategoryResponseList, ServiceRecommendResponseList } from "./types";
+import { CategoryResponse, ServiceRecommendResponse } from "./types";
 
-export const getListCategory = async (): Promise<CategoryResponseList> => {
+export const getListCategory = async (): Promise<CategoryResponse[]> => {
   try {
     const { data } = await api.get("/user/categorias");
-    return data;
+    return data.data;
   } catch (err) {
     // eslint-disable-next-line no-unsafe-optional-chaining
     const { error } = (err as AxiosError<any, any>)?.response?.data;
@@ -15,12 +15,12 @@ export const getListCategory = async (): Promise<CategoryResponseList> => {
 
 export const getServicesRecommended = async (
   credentials: Array<string>
-): Promise<ServiceRecommendResponseList> => {
+): Promise<ServiceRecommendResponse[]> => {
   try {
     const { data } = await api.post("/user/servicerecommendation", {
       services: credentials,
     });
-    return data;
+    return data.data;
   } catch (err) {
     // eslint-disable-next-line no-unsafe-optional-chaining
     const { error } = (err as AxiosError<any, any>)?.response?.data;

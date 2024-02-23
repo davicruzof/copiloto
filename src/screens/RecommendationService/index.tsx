@@ -13,27 +13,23 @@ import { Button } from "@components/Button";
 
 const RecommendationService = () => {
   const {
-    listSelections,
-    navigation,
-    recommendServices,
-    modalVisible,
-    modalAttributes,
-    handleInfo,
-    setModalVisible,
-    handleNextScreen,
-    handleSelectService,
-    handleNextScreenEmpty,
-    mutateGetCompanyLoading,
-    stateModal,
-    updateState,
-    nextScreen,
     cep,
     setCep,
+    handleInfo,
+    navigation,
+    stateModal,
+    updateState,
+    modalVisible,
+    modalAttributes,
+    setModalVisible,
+    handleNextScreen,
+    recommendsServices,
+    handleSelectService,
+    handleNextScreenModal,
+    handleNextScreenEmpty,
+    servicesRecommendationSelected,
   } = RecommendationServiceHook();
 
-  if (mutateGetCompanyLoading) {
-    return <Spinner />;
-  }
   return (
     <S.Background>
       <S.Container>
@@ -47,8 +43,8 @@ const RecommendationService = () => {
           </S.Title>
           <S.WrapperListServices>
             <ScrollView>
-              {recommendServices.map((item) => {
-                const isActive = listSelections.includes(
+              {recommendsServices.map((item) => {
+                const isActive = servicesRecommendationSelected.includes(
                   item.recomended_id_service
                 );
                 return (
@@ -70,8 +66,8 @@ const RecommendationService = () => {
               type="primary"
               onPress={handleNextScreen}
               text="Incluir serviços recomenados"
-              disable={listSelections.length === 0}
-              disabled={listSelections.length === 0}
+              disable={servicesRecommendationSelected.length === 0}
+              disabled={servicesRecommendationSelected.length === 0}
             />
             <Button
               type="secondary"
@@ -91,11 +87,11 @@ const RecommendationService = () => {
       />
 
       <ModalCep
-        updateState={updateState}
-        nextScreen={nextScreen}
         cep={cep}
         setCep={setCep}
         stateModal={stateModal}
+        updateState={updateState}
+        nextScreen={handleNextScreenModal}
       />
     </S.Background>
   );

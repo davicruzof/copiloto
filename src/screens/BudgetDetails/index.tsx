@@ -1,28 +1,58 @@
-import { ScrollView, View } from "react-native";
+import { Alert, Image, ScrollView, View } from "react-native";
 
 import * as S from "./styles";
 import HeaderAuth from "@components/HeaderAuth";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { TimeLine } from "./TimeLine";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Button } from "@components/Button";
+import { Details, Schedule } from "@services/schedule/types";
+import { useMutation } from "@tanstack/react-query";
+import { getScheduleDetails } from "@services/schedule/schedule";
+import { Spinner } from "@components/Spinner";
+import { DateTime } from "luxon";
 
 export function BudgetDetails() {
   const navigation = useNavigation();
-  const { params } = useRoute();
+  const route = useRoute();
+  const [detailsServices, setDetailsServices] = useState<Details>(
+    {} as Details
+  );
 
-  const data = params.budget;
+  const { budget } = route.params as { budget: Schedule };
 
-  const Status = (status: "accept" | "pedding" | "progress") => {
-    if (status === "accept") {
-      return "Proposta aceita";
-    }
-    if (status === "progress") {
-      return "Proposta pendente de aprovação";
-    }
-    return "Sem propostas";
-  };
+  const { mutate: MutateGetSchedules, isLoading } = useMutation({
+    mutationFn: (id: number) => getScheduleDetails(id),
+    onSuccess: async (data) => {
+      if (data.success && data.data.length > 0) {
+        setDetailsServices(data.data[0]);
+      } else {
+        Alert.alert(
+          "Copiloto",
+          "Desculpe, estamos com problemas. Tente novamente mais tarde."
+        );
+      }
+    },
+    onError: () => {
+      Alert.alert(
+        "Copiloto",
+        "Desculpe, estamos com problemas. Tente novamente mais tarde."
+      );
+    },
+  });
+
+  useEffect(() => {
+    MutateGetSchedules(+budget.id);
+  }, []);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (detailsServices === null) {
+    return <></>;
+  }
 
   return (
     <S.Container>
@@ -32,21 +62,19 @@ export function BudgetDetails() {
       />
       <S.Wrapper>
         <S.Header>
-          <View
+          <Image
+            source={{uri: detailsServices.company_image}}
             style={{
               width: 64,
               height: 59.12,
               borderRadius: 5.42373,
-              backgroundColor: "#c4c4c4",
+              borderColor: "#c4c4c4",
+              borderWidth: 1,
               marginRight: 16,
             }}
           />
           <S.WrapperHeader>
-            <S.TitleHeader>{data.title}</S.TitleHeader>
-            <S.InfoContainer>
-              <FontAwesome5 name="map-marker-alt" size={16} color="#2C94F4" />
-              <S.TextInfo>10m distante</S.TextInfo>
-            </S.InfoContainer>
+            <S.TitleHeader>{detailsServices.title}</S.TitleHeader>
           </S.WrapperHeader>
         </S.Header>
 
@@ -63,18 +91,21 @@ export function BudgetDetails() {
             <S.ButtonChatTex>Falar com a oficina</S.ButtonChatTex>
           </S.ButtonChat>
 
-          {data.status === "accept" && <TimeLine />}
+          {detailsServices?.status_history &&
+            detailsServices.status_history.length > 0 && (
+              <TimeLine status={detailsServices.status_history} />
+            )}
 
-          {data.servicos && data.servicos.length > 0 && (
+          {detailsServices.services && detailsServices.services.length > 0 && (
             <>
               <S.Title>Serviços</S.Title>
-              {data.servicos.map((item: any, index: any) => {
+              {detailsServices.services.map((item: any, index: any) => {
                 return (
                   <Fragment key={index}>
                     <S.Line />
                     <S.WrapperService>
-                      <S.ItemLabel>{item.servico}</S.ItemLabel>
-                      <S.Value>R$ {item.proposta}</S.Value>
+                      <S.ItemLabel>{item.title}</S.ItemLabel>
+                      <S.Value>R$ {item.value}</S.Value>
                     </S.WrapperService>
                   </Fragment>
                 );
@@ -93,20 +124,26 @@ export function BudgetDetails() {
           <S.Line />
           <S.WrapperService>
             <S.ItemLabel>Data</S.ItemLabel>
-            <S.Value>{data.data}</S.Value>
+            <S.Value>
+              {new Date(detailsServices.date).toLocaleString("pt-BR", {
+                day: "numeric",
+                month: "numeric",
+                year: "numeric",
+              })}
+            </S.Value>
           </S.WrapperService>
           <S.Line />
           <S.WrapperService>
             <S.ItemLabel>Status</S.ItemLabel>
-            <S.Value>{Status(data.status)}</S.Value>
+            <S.Value>{budget.status}</S.Value>
           </S.WrapperService>
 
-          {data.status !== "accept" && (
+          {/* {budget.status !== "accept" && (
             <S.ButtonWrapper>
               <Button type="primary" text="Aceitar proposta" />
               <Button type="secondary" text="Descartar" />
             </S.ButtonWrapper>
-          )}
+          )} */}
         </ScrollView>
       </S.Wrapper>
     </S.Container>

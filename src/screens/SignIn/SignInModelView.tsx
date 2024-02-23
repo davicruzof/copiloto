@@ -1,6 +1,7 @@
 import { UserContext } from "@contexts/userContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { api } from "@services/api";
 import { signIn } from "@services/auth/auth";
 import { UserLogin } from "@services/types";
 import { useMutation } from "@tanstack/react-query";
@@ -19,6 +20,8 @@ const SignInModelView = () => {
     onSuccess: async (data) => {
       if (data.success) {
         await AsyncStorage.setItem("@user", JSON.stringify(data.user));
+        await AsyncStorage.setItem("@token", data.token);
+        api.defaults.headers.Authorization = `Bearer ${data.token}`;
         setUser({ user: data.user, auth: true });
       } else {
         setError(true);

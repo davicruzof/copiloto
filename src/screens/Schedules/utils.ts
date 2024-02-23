@@ -1,5 +1,6 @@
 import { MarkedDates } from "react-native-calendars/src/types";
 import { data } from "./util";
+import { Schedule } from "@services/schedule/types";
 
 // export const Marked = {
 //   ["2023-07-15"]: {
@@ -58,11 +59,15 @@ export const DateUtils = {
   today: "Hoje",
 };
 
-export function Marked() {
+export function Marked(data: Schedule[]) {
   const marked: MarkedDates = {};
 
   data.map((item) => {
-    marked[item.date] = { selected: true, selectedColor: "#2C94F4", ...item };
+    marked[item.schedule_date] = {
+      selected: true,
+      selectedColor: "#2C94F4",
+      ...item,
+    };
   });
 
   return marked;

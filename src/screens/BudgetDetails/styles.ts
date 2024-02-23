@@ -42,18 +42,6 @@ export const TitleHeader = styled.Text`
   width: ${height * 0.3}px;
 `;
 
-export const TextInfo = styled.Text`
-  color: #7e8b96;
-  font-family: Jost_400Regular;
-  font-size: 14px;
-  margin-left: 8px;
-`;
-
-export const InfoContainer = styled.View`
-  flex-direction: row;
-  margin-top: 7px;
-`;
-
 export const Title = styled.Text`
   color: #000;
   font-family: Jost_600SemiBold;

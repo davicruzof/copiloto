@@ -12,24 +12,23 @@ import { Button } from "@components/Button";
 
 const FullServices = () => {
   const {
+    cep,
+    ativo,
+    setCep,
+    services,
     isLoading,
     navigation,
-    categoryList,
-    activeItem,
-    ativo,
-    services,
-    handleRecommendation,
-    handleSelectService,
-    listSelections,
-    mutateGetCompanyLoading,
-    cep,
-    setCep,
-    updateState,
     stateModal,
-    nextScreen,
+    updateState,
+    categoriesList,
+    servicesSelected,
+    handleNextScreen,
+    handleSelectService,
+    handleChangeCategory,
+    handleNextScreenModal,
   } = FullServicesHook();
 
-  if (isLoading || mutateGetCompanyLoading) {
+  if (isLoading) {
     return <Spinner />;
   }
 
@@ -43,20 +42,20 @@ const FullServices = () => {
         <S.Wrapper>
           <S.WrapperList>
             <ListCategories
-              categoryList={categoryList}
-              activeItem={activeItem}
               active={ativo}
+              categoryList={categoriesList}
+              activeItem={handleChangeCategory}
             />
           </S.WrapperList>
           <S.WrapperListServices>
             <ScrollView showsVerticalScrollIndicator={false}>
               {services.length > 0 &&
                 services.map((item) => {
-                  const isActive = listSelections.includes(item.idservice);
+                  const isActive = servicesSelected.includes(item.idservice);
                   return (
                     <ServiceWithCheckboxFullService
-                      title={item.nome}
                       key={item.nome}
+                      title={item.nome}
                       isActive={isActive}
                       handleSelectService={() => handleSelectService(item)}
                     />
@@ -65,21 +64,21 @@ const FullServices = () => {
             </ScrollView>
           </S.WrapperListServices>
           <Button
-            type="primary"
             isIcon
+            type="primary"
             text="Confirmar dados"
-            onPress={handleRecommendation}
-            disable={listSelections.length === 0}
-            disabled={listSelections.length === 0}
+            onPress={handleNextScreen}
+            disable={servicesSelected.length === 0}
+            disabled={servicesSelected.length === 0}
           />
         </S.Wrapper>
       </S.Container>
       <ModalCep
-        updateState={updateState}
-        nextScreen={nextScreen}
         cep={cep}
         setCep={setCep}
         stateModal={stateModal}
+        updateState={updateState}
+        nextScreen={handleNextScreenModal}
       />
     </S.Background>
   );

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Alert, View } from "react-native";
+import { Alert, Image, View } from "react-native";
 
 import * as S from "./styles";
 
@@ -11,6 +11,12 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { OrcamentoContext } from "@contexts/orcamento";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "@components/Button";
+import { ServicesSelectedContext } from "@contexts/servicesSelected";
+import { createSchedule } from "@services/schedule/schedule";
+import { CreateSchedule } from "@services/schedule/types";
+import { useMutation } from "@tanstack/react-query";
+import { Spinner } from "@components/Spinner";
+import { ServicesRecommendationSelectedContext } from "@contexts/servicesRecommendationSelected";
 
 export const BottomSheetOffice: React.FC<{
   visible: boolean;
@@ -23,28 +29,59 @@ export const BottomSheetOffice: React.FC<{
   const { bottom } = useSafeAreaInsets();
 
   const { setOrcamento } = useContext(OrcamentoContext);
+  const { servicesSelected } = useContext(ServicesSelectedContext);
+  const { servicesRecommendationSelected } = useContext(
+    ServicesRecommendationSelectedContext
+  );
 
-  const handleAddService = () => {
+  const { mutate: mutateCreateSchedule, isLoading } = useMutation({
+    mutationFn: (servicesIds: CreateSchedule) => createSchedule(servicesIds),
+    onSuccess: (data) => {
+      if (data.success) {
+        Alert.alert("Copiloto", data.message);
+        navigation.navigate("home");
+      }
+    },
+    onError: () => {
+      Alert.alert(
+        "Copiloto",
+        "Desculpe, estamos com problemas. Tente novamente mais tarde."
+      );
+    },
+  });
+
+  const handleAddService = (id: string) => {
     setOrcamento((old: any) => (old !== null ? [...old, data] : [data]));
     setTabActive();
     setVisible();
   };
 
-  const sendNewOrcamento = () => {
-    Alert.alert("Copiloto", "Orcamento solicitado");
-    navigation.navigate("home");
+  const sendNewOrcamento = (id: string) => {
+    const orcamento: CreateSchedule = {
+      companies: [id],
+      services: [...servicesSelected, ...servicesRecommendationSelected],
+      id_vehicle: 1,
+    };
+
+    mutateCreateSchedule(orcamento);
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <BottomSheet visible={visible} onBackButtonPress={setVisible}>
       <S.Container bottom={bottom}>
         <S.Header>
-          <View
+          <Image
+            source={{ uri: data?.company_image }}
             style={{
               width: 64,
               height: 59.12,
               borderRadius: 5.42373,
-              backgroundColor: "#c4c4c4",
+              borderColor: "#c4c4c4",
+              borderWidth: 1,
               marginRight: 16,
             }}
           />
@@ -61,7 +98,9 @@ export const BottomSheetOffice: React.FC<{
             <S.LocationContainer>
               <S.InfoContainer>
                 <FontAwesome5 name="map-marker-alt" size={16} color="#2C94F4" />
-                <S.TextInfo>{data?.distance}m distante</S.TextInfo>
+                <S.TextInfo>
+                  {parseFloat(data.distance).toFixed(2)}m distante
+                </S.TextInfo>
               </S.InfoContainer>
               {Boolean(data.isHouse) && (
                 <S.InfoContainer>
@@ -77,7 +116,11 @@ export const BottomSheetOffice: React.FC<{
           type="primary"
           isIcon
           text={type === "add" ? "Incluir para orçamento" : "Agendar agora"}
-          onPress={type === "add" ? handleAddService : sendNewOrcamento}
+          onPress={() =>
+            type === "add"
+              ? handleAddService(data?.id_company)
+              : sendNewOrcamento(data?.id_company)
+          }
           disable={false}
         />
         {type !== "add" && (
@@ -85,7 +128,7 @@ export const BottomSheetOffice: React.FC<{
             type="secondary"
             isIcon
             text="Solicitar orçamento"
-            onPress={handleAddService}
+            onPress={() => handleAddService(data?.id_company)}
           />
         )}
         <ButtonLigthDanger text="fechar" onPress={setVisible} />

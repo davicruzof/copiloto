@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { CategoryResponse, ServiceResponse } from "@services/user/types";
 import { getListCategory } from "@services/user/user";
 import { useQuery } from "@tanstack/react-query";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Alert } from "react-native";
 
 const HomeViewModel = () => {
@@ -12,38 +12,26 @@ const HomeViewModel = () => {
   const {
     user: { user },
   } = useContext(UserContext);
-  const [categoryList, setCategoryList] = useState<CategoryResponse[]>([]);
-  const [services, setServices] = useState<ServiceResponse[]>([]);
-  const [servicesList, setServicesList] = useState<ServiceResponse[]>([]);
+  const [services, setServices] = useState<ServiceResponse[]>([]); // [1
 
-  const { isLoading: isLoadingGetListCategory, refetch: refetchCategorias } =
-    useQuery({
-      queryKey: ["todos"],
-      queryFn: getListCategory,
-      onSuccess: ({ data }) => {
-        if (data) {
-          setCategoryList(data);
-          activeItem(data[0]);
-
-          const serviceAux: React.SetStateAction<ServiceResponse[]> = [];
-
-          data.map(
-            (item) => item?.services && serviceAux.push(...item.services)
-          );
-          setServicesList(serviceAux);
-        }
-      },
-      onError: () => {
-        Alert.alert(
-          "Copiloto",
-          "Desculpe, estamos com problemas. Tente novamente!",
-          [{ text: "Tentar novamente", onPress: () => refetchCategorias() }]
-        );
-      },
-    });
+  const {
+    data: categories,
+    isLoading: isLoadingGetListCategory,
+    refetch: refetchCategorias,
+  } = useQuery({
+    queryKey: ["todos"],
+    queryFn: getListCategory,
+    onError: () => {
+      Alert.alert(
+        "Copiloto",
+        "Desculpe, estamos com problemas. Tente novamente!",
+        [{ text: "Tentar novamente", onPress: () => refetchCategorias() }]
+      );
+    },
+  });
 
   const handleSearch = () => {
-    navigation.navigate("SearchHome", { services: servicesList, categoryList });
+    navigation.navigate("SearchHome", { services: services, categories });
   };
 
   const activeItem = (item: CategoryResponse) => {
@@ -51,22 +39,25 @@ const HomeViewModel = () => {
     setServices(item?.services ? item.services : []);
   };
 
-  const isEmpty =
-    services.length === 0 ||
-    !user ||
-    categoryList.length === 0 ||
-    servicesList.length === 0;
+  const isEmpty = !user || !categories || categories.length === 0;
+
+  useEffect(() => {
+    if (categories && categories.length > 0) {
+      setAtivo(categories[0].nome);
+      setServices(categories[0].services);
+    }
+  }, [categories]);
 
   return {
-    navigation,
     ativo,
     user,
-    categoryList,
-    services,
-    isLoadingGetListCategory,
-    handleSearch,
-    activeItem,
     isEmpty,
+    services,
+    categories,
+    navigation,
+    activeItem,
+    handleSearch,
+    isLoadingGetListCategory,
   };
 };
 

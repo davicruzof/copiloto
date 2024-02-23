@@ -9,15 +9,15 @@ import ListCategories from "@components/ListCategories";
 
 const Home = () => {
   const {
-    navigation,
     ativo,
     user,
-    categoryList,
-    services,
-    isLoadingGetListCategory,
-    handleSearch,
-    activeItem,
     isEmpty,
+    services,
+    categories,
+    navigation,
+    activeItem,
+    handleSearch,
+    isLoadingGetListCategory,
   } = HomeViewModel();
 
   if (isLoadingGetListCategory) {
@@ -40,7 +40,7 @@ const Home = () => {
         </S.Search>
         <ScrollView showsVerticalScrollIndicator={false}>
           <ListCategories
-            categoryList={categoryList}
+            categoryList={categories!}
             activeItem={activeItem}
             active={ativo}
           />
@@ -54,9 +54,10 @@ const Home = () => {
                       key={item.nome}
                       onPress={() =>
                         navigation.navigate("FullServices", {
-                          services,
-                          categoryList,
                           selectItem: item,
+                          servicesList: services,
+                          categoryActive: ativo,
+                          categoriesList: categories,
                         })
                       }
                     >
@@ -69,8 +70,9 @@ const Home = () => {
               <S.Service
                 onPress={() =>
                   navigation.navigate("FullServices", {
-                    services,
-                    categoryList,
+                    serviceList: services,
+                    categoryActive: ativo,
+                    categoriesList: categories,
                   })
                 }
               >

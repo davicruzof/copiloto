@@ -2,11 +2,13 @@ import { useState } from "react";
 
 import { QueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { IOrcamentoContext } from "@contexts/orcamento";
 
 const AppModelView = () => {
   const [user, setUser] = useState(null);
-  const [orcamento, setOrcamento] = useState(null);
-  const [servicesMap, setServicesMap] = useState(null);
+  const [orcamento, setOrcamento] = useState<IOrcamentoContext | null>(null);
+  const [servicesSelected, setServicesSelected] = useState<string[]>([]);
+  const [servicesRecommendationSelected, setServicesRecommendationSelected] = useState<string[]>([]);
 
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -29,8 +31,10 @@ const AppModelView = () => {
     setUser,
     orcamento,
     setOrcamento,
-    servicesMap,
-    setServicesMap,
+    servicesSelected,
+    setServicesSelected,
+    servicesRecommendationSelected,
+    setServicesRecommendationSelected
   };
 };
 

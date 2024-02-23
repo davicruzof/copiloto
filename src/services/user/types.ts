@@ -17,11 +17,7 @@ export interface CategoryResponse {
   updated_at: string;
   ordenate: string;
   active: string;
-  services?: ServiceResponse[];
-}
-
-export interface CategoryResponseList {
-  data: CategoryResponse[];
+  services: ServiceResponse[];
 }
 
 export interface ServiceRecommendResponse {
@@ -29,8 +25,4 @@ export interface ServiceRecommendResponse {
   nome: string;
   recomended_id_service: string;
   recommendation_text: string;
-}
-
-export interface ServiceRecommendResponseList {
-  data: ServiceRecommendResponse[];
 }

@@ -4,6 +4,7 @@ import RoutesWithoutAuth from "./RoutesWithoutAuth";
 import AuthRoutes from "./StackAuth";
 import { UserContext } from "../contexts/userContext";
 import { Spinner } from "@shared/components/Spinner";
+import { api } from "@services/api";
 
 const Routes = () => {
   const { user, setUser } = useContext(UserContext);
@@ -11,7 +12,9 @@ const Routes = () => {
 
   const userAuthenticated = async () => {
     const userValue = await AsyncStorage.getItem("@user");
-    if (userValue) {
+    const token = await AsyncStorage.getItem("@token");
+    if (userValue && token) {
+      api.defaults.headers.Authorization = `Bearer ${token}`;
       setUser({ user: JSON.parse(userValue), auth: true });
     }
     setLoading(false);

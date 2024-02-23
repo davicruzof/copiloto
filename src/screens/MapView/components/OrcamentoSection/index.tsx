@@ -4,14 +4,20 @@ import { Alert, ScrollView } from "react-native";
 import { CardList } from "../CardList";
 import { ButtonLigthDanger } from "@components/ButtonLigthDanger";
 import { CardService } from "../CardService";
-import { OrcamentoContext } from "@contexts/orcamento";
+import { IOrcamentoContext, OrcamentoContext } from "@contexts/orcamento";
 import { useNavigation } from "@react-navigation/native";
 import * as S from "./styles";
 import { Button } from "@components/Button";
+import { useMutation } from "@tanstack/react-query";
+import { createSchedule } from "@services/schedule/schedule";
+import { CreateSchedule } from "@services/schedule/types";
+import { ServicesSelectedContext } from "@contexts/servicesSelected";
+import { Spinner } from "@components/Spinner";
 
 export const OrcamentoSection = ({ setTabActive, setTypeBottomSheet }: any) => {
   const navigation = useNavigation<any>();
   const { orcamento, setOrcamento } = useContext(OrcamentoContext);
+  const { servicesSelected, setServicesSelected } = useContext(ServicesSelectedContext);
 
   const toggleBottomNavigationView = () => {
     setOrcamento(null);
@@ -20,6 +26,24 @@ export const OrcamentoSection = ({ setTabActive, setTypeBottomSheet }: any) => {
   const orcamentoSize = orcamento !== null ? orcamento.length : 0;
 
   const selectedValues = `Solicitar orçamento(${orcamentoSize}/3)`;
+
+  const { mutate: mutateCreateSchedule, isLoading } = useMutation({
+    mutationFn: (servicesIds: CreateSchedule) => createSchedule(servicesIds),
+    onSuccess: (data) => {
+      if (data.success) {
+        Alert.alert("Copiloto", data.message);
+        setOrcamento(null);
+        setServicesSelected([]);
+        navigation.navigate("home");
+      }
+    },
+    onError: () => {
+      Alert.alert(
+        "Copiloto",
+        "Desculpe, estamos com problemas. Tente novamente mais tarde."
+      );
+    },
+  });
 
   const addNewService = () => {
     setTabActive();
@@ -57,12 +81,26 @@ export const OrcamentoSection = ({ setTabActive, setTypeBottomSheet }: any) => {
   };
 
   const sendNewOrcamento = () => {
-    if (orcamentoSize > 0) {
-      setOrcamento(null);
-      Alert.alert("Copiloto", "Orcamento solicitado");
-      navigation.navigate("home");
+    if (!orcamento) {
+      return;
     }
+
+    const servicesCompanies = orcamento.map(
+      (item: IOrcamentoContext) => item.id_company
+    );
+
+    const orcamentoSend: CreateSchedule = {
+      companies: servicesCompanies,
+      services: servicesSelected,
+      id_vehicle: 1,
+    };
+
+    mutateCreateSchedule(orcamentoSend);
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <S.Container>
@@ -76,11 +114,7 @@ export const OrcamentoSection = ({ setTabActive, setTypeBottomSheet }: any) => {
             ? orcamentoSize > 0 &&
               orcamento.map((item: any, index: any) => {
                 return (
-                  <CardList
-                    key={index}
-                    data={item}
-                    handlePress={() => {}}
-                  />
+                  <CardList key={index} data={item} handlePress={() => {}} />
                 );
               })
             : emptyService(3)}
