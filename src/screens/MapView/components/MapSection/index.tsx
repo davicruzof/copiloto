@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 
 import { BottomSheetOffice } from "../BottomSheetOffice";
 import SwitchView from "../SwitchView";
@@ -14,12 +14,12 @@ export const MapSection = ({ typeBottomSheet, setTabActive }: any) => {
     orcamento,
     visible,
     viewActive,
-    setViewActive,
-    bottomSheetValue,
-    toggleBottomNavigationView,
     coordinates,
+    setViewActive,
     servicesCompany,
+    bottomSheetValue,
     mutateGetCompanyLoading,
+    toggleBottomNavigationView,
   } = MapSectionViewModel();
 
   if (mutateGetCompanyLoading) {
@@ -39,10 +39,11 @@ export const MapSection = ({ typeBottomSheet, setTabActive }: any) => {
     services = aux;
   }
 
+
   return (
-    <Suspense fallback={<Spinner />}>
+    <>
       <SwitchView
-        mapPermission={coordinates?.latitude}
+        mapPermission={coordinates?.latitude ? true : false}
         active={viewActive}
         setActive={setViewActive}
       />
@@ -52,7 +53,7 @@ export const MapSection = ({ typeBottomSheet, setTabActive }: any) => {
         services.length > 0 && (
           <Map
             coordenantes={coordinates}
-            servicesCompany={servicesCompany}
+            servicesCompany={services}
             toggleBottomNavigationView={toggleBottomNavigationView}
           />
         )
@@ -77,6 +78,6 @@ export const MapSection = ({ typeBottomSheet, setTabActive }: any) => {
         setVisible={toggleBottomNavigationView}
         setTabActive={setTabActive}
       />
-    </Suspense>
+    </>
   );
 };

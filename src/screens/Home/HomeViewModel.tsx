@@ -1,3 +1,4 @@
+import { ServicesSelectedContext } from "@contexts/servicesSelected";
 import { UserContext } from "@contexts/userContext";
 import { useNavigation } from "@react-navigation/native";
 import { CategoryResponse, ServiceResponse } from "@services/user/types";
@@ -12,6 +13,7 @@ const HomeViewModel = () => {
   const {
     user: { user },
   } = useContext(UserContext);
+  const { setServicesSelected } = useContext(ServicesSelectedContext);
   const [services, setServices] = useState<ServiceResponse[]>([]); // [1
 
   const {
@@ -39,6 +41,25 @@ const HomeViewModel = () => {
     setServices(item?.services ? item.services : []);
   };
 
+  const handleFullServicesSelected = (item: ServiceResponse) => {
+    setServicesSelected([]);
+    navigation.navigate("FullServices", {
+      selectItem: item,
+      servicesList: services,
+      categoryActive: ativo,
+      categoriesList: categories,
+    });
+  };
+
+  const handleFullServices = () => {
+    setServicesSelected([]);
+    navigation.navigate("FullServices", {
+      servicesList: services,
+      categoryActive: ativo,
+      categoriesList: categories,
+    });
+  };
+
   const isEmpty = !user || !categories || categories.length === 0;
 
   useEffect(() => {
@@ -57,7 +78,9 @@ const HomeViewModel = () => {
     navigation,
     activeItem,
     handleSearch,
+    handleFullServices,
     isLoadingGetListCategory,
+    handleFullServicesSelected,
   };
 };
 

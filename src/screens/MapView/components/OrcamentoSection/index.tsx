@@ -13,11 +13,17 @@ import { createSchedule } from "@services/schedule/schedule";
 import { CreateSchedule } from "@services/schedule/types";
 import { ServicesSelectedContext } from "@contexts/servicesSelected";
 import { Spinner } from "@components/Spinner";
+import { ServicesRecommendationSelectedContext } from "@contexts/servicesRecommendationSelected";
 
 export const OrcamentoSection = ({ setTabActive, setTypeBottomSheet }: any) => {
   const navigation = useNavigation<any>();
   const { orcamento, setOrcamento } = useContext(OrcamentoContext);
-  const { servicesSelected, setServicesSelected } = useContext(ServicesSelectedContext);
+  const { servicesSelected, setServicesSelected } = useContext(
+    ServicesSelectedContext
+  );
+  const { servicesRecommendationSelected } = useContext(
+    ServicesRecommendationSelectedContext
+  );
 
   const toggleBottomNavigationView = () => {
     setOrcamento(null);
@@ -91,7 +97,7 @@ export const OrcamentoSection = ({ setTabActive, setTypeBottomSheet }: any) => {
 
     const orcamentoSend: CreateSchedule = {
       companies: servicesCompanies,
-      services: servicesSelected,
+      services: [...servicesSelected, ...servicesRecommendationSelected],
       id_vehicle: 1,
     };
 

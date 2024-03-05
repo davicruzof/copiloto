@@ -20,7 +20,7 @@ const MapSectionViewModel = () => {
     ServicesRecommendationSelectedContext
   );
   const { servicesSelected } = useContext(ServicesSelectedContext);
-  const { getPosition } = hookPermissionLocation();
+  const { getPosition, requestPermission } = hookPermissionLocation();
   const [coordinates, setCoordinates] = useState<{
     latitude: string;
     longitude: string;
@@ -28,7 +28,7 @@ const MapSectionViewModel = () => {
 
   const [servicesCompany, setServicesCompany] = useState<ServicesCompany[]>([]);
 
-  const [viewActive, setViewActive] = useState("list");
+  const [viewActive, setViewActive] = useState("");
   const [visible, setVisible] = useState(false);
   const [bottomSheetValue, setBottomSheetValue] = useState({});
 
@@ -60,12 +60,21 @@ const MapSectionViewModel = () => {
     };
 
     if (params?.cep) {
+      setViewActive("list");
       paramsRequest = {
         ...paramsRequest,
         cep: params.cep,
       };
+
+      mutateGetServicesCompany(paramsRequest);
     } else {
       const permission = async () => {
+        setViewActive("map");
+        const permissionStatus = await requestPermission();
+        if (permissionStatus !== "granted") {
+          setViewActive("list");
+          return;
+        }
         const position = await getPosition();
         if (position.coordenadas) {
           setCoordinates(position.coordenadas);
@@ -73,12 +82,12 @@ const MapSectionViewModel = () => {
             ...paramsRequest,
             coordenadas: position.coordenadas,
           };
+
+          mutateGetServicesCompany(paramsRequest);
         }
       };
       permission();
     }
-
-    mutateGetServicesCompany(paramsRequest);
   }, [isFocused]);
 
   return {

@@ -14,10 +14,11 @@ const Home = () => {
     isEmpty,
     services,
     categories,
-    navigation,
     activeItem,
     handleSearch,
+    handleFullServices,
     isLoadingGetListCategory,
+    handleFullServicesSelected,
   } = HomeViewModel();
 
   if (isLoadingGetListCategory) {
@@ -52,14 +53,7 @@ const Home = () => {
                   index < 3 && (
                     <S.Service
                       key={item.nome}
-                      onPress={() =>
-                        navigation.navigate("FullServices", {
-                          selectItem: item,
-                          servicesList: services,
-                          categoryActive: ativo,
-                          categoriesList: categories,
-                        })
-                      }
+                      onPress={() => handleFullServicesSelected(item)}
                     >
                       <S.ServiceTitle>{item.nome}</S.ServiceTitle>
                     </S.Service>
@@ -67,15 +61,7 @@ const Home = () => {
                 );
               })}
             {services.length > 3 && (
-              <S.Service
-                onPress={() =>
-                  navigation.navigate("FullServices", {
-                    serviceList: services,
-                    categoryActive: ativo,
-                    categoriesList: categories,
-                  })
-                }
-              >
+              <S.Service onPress={handleFullServices}>
                 <S.ServiceTitle>Ver todas as opções</S.ServiceTitle>
               </S.Service>
             )}
